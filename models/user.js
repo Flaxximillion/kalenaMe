@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes){
         isAlphanumeric: true,
         notNull: true,
         notEmpty: true,
-        len: [5, 20],
+        len: [5, 20]
       }
     },
     phone: {
@@ -56,9 +56,7 @@ module.exports = function(sequelize, DataTypes){
   // });
 
   User.associate = function(models){
-    User.hasMany(models.Task, {
-      onDelete: "cascade"
-    });
+    User.hasMany(models.Task);
   };
 
   return User;

@@ -35,7 +35,17 @@ module.exports = function(sequelize, DataTypes){
         allowNull: false
       }
     });
-  };
 
-  return Task;
+    Task.associate = function (models) {
+        Task.belongsTo(models.User, {
+            onDelete: "CASCADE",
+            foreignKey: {
+                allowNull: false
+            }
+        });
+
+        Task.hasMany(models.Message);
+    };
+
+    return Task;
 };
