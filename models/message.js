@@ -10,13 +10,13 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     //a message can't be created without a task
-    Message.associate = function (models) {
-        Message.belongsTo(models.Task, {
-            foreignKey: {
-                allowNull: false
-            }
-        });
-    };
+    // Message.associate = function (models) {
+    //     Message.belongsTo(models.Task, {
+    //         foreignKey: {
+    //             allowNull: false
+    //         }
+    //     });
+    // };
 
     return Message;
 };
