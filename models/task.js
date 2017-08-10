@@ -1,47 +1,67 @@
-module.exports = function(sequelize, DataTypes){
-  var Task = sequelize.define("Task", {
-    title: {
-      type: DataTypes.STRING,
-      validate: {
-        isAlphanumeric: true,
-        notNull: true,
-        notEmpty: true,
-        len: [5, 50],
+module.exports = function (sequelize, DataTypes) {
+    var Task = sequelize.define("Task", {
+      taskID: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        validate: {
+          notNull: true,
+          notEmpty: true
+        }
+      },
+      taskCalendar: {
+        type: DataTypes.INTEGER,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+          isNumeric: true
+        }
       }
-    },
-    description: DataTypes.TEXT,
-    taken: {
-      type: DataTypes.BOOLEAN,
-      default: false,
-      validate: {
-        notNull: true
+      taskName: {
+        type: DataTypes.STRING,
+        validate: {
+          isAlphanumeric: true,
+          notNull: true,
+          notEmpty: true,
+          len: [5, 100]
+        }
+      },
+      taskDescription: DataTypes.TEXT,
+      taskAccepted: {
+        type: DataTypes.BOOLEAN,
+        default: false,
+        validate: {
+          notNull: true
+        }
+      },
+      taskRequester: {
+        type: DataTypes.STRING,
+        validate: {
+          notNull: true,
+          notEmpty: true
+        }
+      },
+      taskAccepter: {
+        type: DataTypes.STRING,
+      },
+      taskDate: {
+        type: DataTypes.DATEONLY,
+        validate: {
+          notEmpty: true,
+          notNull: true,
+          isDate: true
+        }
+      },
+      taskTime: {
+        type: DataTypes.TIME,
+        validate: {
+          notEmpty: true,
+          notNull: true
+        }
       }
-    },
-    date_needed: {
-      type: DataTypes.DATEONLY,
-      validate: {
-        notEmpty: true,
-        notNull: true,
-        isDate: true
-      }
-    }
-  });
-
-  //a task can't be created without an user
-  // Task.associate = function(models){
-  //   Task.belongsTo(models.User, {
-  //     foriengKey: {
-  //       allowNull: false
-  //     }
-  //   });
-  // };
-  Task.associate = function(models){
-    Task.belongsTo(models.User, {
-      foriengKey: {
-        allowNull: false
-      }
+    }, {
+      timestamps: false
     });
-  };
 
   return Task;
 };

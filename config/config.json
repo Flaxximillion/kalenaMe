@@ -1,10 +1,11 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "helper_db",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": "kalenaDB",
+    "password": "kalenaDB#teamrad",
+    "database": "KalenaDB",
+    "host": "kalenadb.ckhzrw8nhjrf.us-east-2.rds.amazonaws.com",
+    "port": 5432,
+    "dialect": "postgres"
   },
   "test": {
     "username": "root",
