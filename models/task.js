@@ -28,16 +28,10 @@ module.exports = function(sequelize, DataTypes){
   });
 
   //a task can't be created without an user
-  // Task.associate = function(models){
-  //   Task.belongsTo(models.User, {
-  //     foriengKey: {
-  //       allowNull: false
-  //     }
-  //   });
-  // };
+
   Task.associate = function(models){
     Task.belongsTo(models.User, {
-      foriengKey: {
+      foreignKey: {
         allowNull: false
       }
     });
