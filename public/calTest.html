@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Calendar Tests</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" />
+
+</head>
+<body>
+
+  <div id='calendar'></div>
+
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+
+  <script>
+  var dummyData = [
+    {
+
+    }
+  ];
+
+  function addNewTask(data) {
+    console.log("The date that was clicked: " + $(data).data().date);
+  }
+
+  function renderTasks() {
+    $("td.fc-day[data-date='2017-08-11']").append("Yo mama.");
+  }
+
+  $(document).ready(function() {
+    // Page is ready
+    $('#calendar').fullCalendar({
+        // Callback events
+        // After calendar is rendered, before other events are triggered
+        viewRender: function() {
+          renderTasks();
+        },
+        // When a day is clicked
+        dayClick: function() {
+          addNewTask(this);
+        }
+    })
+  });
+</script>
+
+</body>
+</html>
