@@ -9,3 +9,26 @@ body {
 a {
   color: #00B7FF;
 }
+#usr{
+	width: 400px;
+}
+
+.pwd{
+	margin-left: 40px;
+}
+#butt1{
+	background-color: blue;
+	color: #fff;
+	margin-top: 100px;
+	border-radius: 12px;
+}
+#butt2{
+	background-color: blue;
+	color: #fff;
+	margin-top: 100px;
+	width: 120px;
+	height: 30px;
+	border-radius: 12px;
+}
+body{
+	background-color: grey;}
