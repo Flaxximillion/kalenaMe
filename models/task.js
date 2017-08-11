@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-    var Task = sequelize.define("Task", {
+    var Task = sequelize.define("tasks", {
       taskID: {
         type: DataTypes.INTEGER,
         primaryKey: true,
