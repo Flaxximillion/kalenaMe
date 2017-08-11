@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-    var Task = sequelize.define("Task", {
+    var Task = sequelize.define("tasks", {
       taskID: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -10,11 +10,10 @@ module.exports = function (sequelize, DataTypes) {
         }
       },
       taskCalendar: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         validate: {
           notNull: true,
-          notEmpty: true,
-          isNumeric: true
+          notEmpty: true
         }
       },
       taskName: {

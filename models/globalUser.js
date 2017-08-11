@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-    var GlobalUser = sequelize.define("globalUser", {
+    var GlobalUser = sequelize.define("GlobalUser", {
       globalUserUUID: {
         type: DataTypes.STRING,
         primaryKey: true,

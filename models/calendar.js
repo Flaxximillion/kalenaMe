@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-    var Calendar = sequelize.define("Calendar", {
+    var Calendar = sequelize.define("calendar", {
       calendarID: {
         type: DataTypes.STRING,
         primaryKey: true,
