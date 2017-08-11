@@ -10,13 +10,12 @@ module.exports = function (sequelize, DataTypes) {
         }
       },
       taskCalendar: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         validate: {
           notNull: true,
-          notEmpty: true,
-          isNumeric: true
+          notEmpty: true
         }
-      }
+      },
       taskName: {
         type: DataTypes.STRING,
         validate: {

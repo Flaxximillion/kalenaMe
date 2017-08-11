@@ -5,10 +5,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var index = require('./routes/index');
-var calendar = require('./routes/calendar');
-var createGroup = require('./routes/createGroup');
-var createUser = require('./routes/createUser');
+// var index = require('./routes/index');
+// var calendarRoute = require('./routes/calendarRoute');
+// var htmlRoute = require('./routes/htmlRoute');
+// var userRoute = require('./routes/userRoute');
 
 var app = express();
 
@@ -24,10 +24,15 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
-app.use('/users', calendar);
-app.use('/createGroup', createGroup);
-app.use('/createUser', createUser);
+// app.use('/', index);
+// app.use('/calendar', calendarRoute);
+// app.use('/htmlRoute', htmlRoute);
+// app.use('/userRoute', userRoute);
+
+require("./routes/index.js")(app);
+require("./routes/calendarRoute.js")(app);
+require("./routes/htmlRoute.js")(app);
+require("./routes/userRoute.js")(app);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
