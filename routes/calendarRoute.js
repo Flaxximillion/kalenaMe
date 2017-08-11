@@ -1,28 +1,13 @@
 var express = require('express');
 var router = express.Router();
-var db = require("../models");
+var models = require("../models");
 
-//test GET route
-router.get('/api/test/calendar', function (req, res) {
-  db.Calendar.findAll({}).then(function(dbCalendar){
-    //res.json(dbCalendar);
-    res.send("Hello World");
-  });
+router.get('/:id', function(req, res, next){
+    models.Calendar.findAll();
 });
 
-//GET route for retrieving all the calendars
-router.get('/api/calendar', function (req, res) {
-  db.Calendar.findAll({}).then(function(dbCalendar){
-    res.json(dbCalendar);
-  });
-});
-
-//POST route for creating a new calendar
-router.post("/api/calendar" function(req, res){
-  db.Calendar.create(req.body)
-  .then(function(dbCalendar){
-    res.json(dbCalendar);
-  });
+router.post('/submit/', function(req, res, next){
+    res.send('test');
 });
 
 module.exports = router;
