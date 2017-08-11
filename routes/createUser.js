@@ -1,9 +1,11 @@
 var express = require('express');
 var models = require('../models');
 var router = express.Router();
+var path = require("path");
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
+
+router.post('/api/creatuser', function (req, res, next) {
+  db.
     res.render('createUser.hbs');
 });
 
