@@ -6,7 +6,15 @@ var tasks = {
   events: [
   {
     title: "This is a claimed task",
-    start: "2017-08-14",
+    start: "2017-08-01T12:00:00",
+    claimed: true,
+    description: "This is a longer description of the task.",
+    backgroundColor: "green",
+    borderColor: "green"
+  },
+  {
+    title: "This is another claimed task",
+    start: "2017-08-01T14:00:00",
     claimed: true,
     description: "This is a longer description of the task.",
     backgroundColor: "green",
@@ -14,7 +22,7 @@ var tasks = {
   },
   {
     title: "An unclaimed task here",
-    start: "2017-08-17",
+    start: "2017-08-17T10:00:00",
     claimed: false,
     description: "This is a longer description of the second task.",
     backgroundColor: "red",
