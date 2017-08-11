@@ -24,6 +24,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+<<<<<<< HEAD
 // app.use('/', index);
 // app.use('/calendar', calendarRoute);
 // app.use('/htmlRoute', htmlRoute);
@@ -33,6 +34,12 @@ require("./routes/index.js")(app);
 require("./routes/calendarRoute.js")(app);
 require("./routes/htmlRoute.js")(app);
 require("./routes/userRoute.js")(app);
+=======
+app.use('/', index);
+app.use('/users', calendar);
+app.use('/createCalendar', createCalendar);
+app.use('/createUser', createUser);
+>>>>>>> master
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

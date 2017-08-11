@@ -41,7 +41,7 @@ module.exports = function (sequelize, DataTypes) {
         }
       },
       taskAccepter: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
       },
       taskDate: {
         type: DataTypes.DATEONLY,
