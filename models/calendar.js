@@ -22,5 +22,5 @@ module.exports = function (sequelize, DataTypes) {
       timestamps: false
     });
 
-  return Task;
+  return Calendar;
 };

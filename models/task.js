@@ -16,7 +16,7 @@ module.exports = function (sequelize, DataTypes) {
           notEmpty: true,
           isNumeric: true
         }
-      }
+      },
       taskName: {
         type: DataTypes.STRING,
         validate: {
@@ -42,7 +42,7 @@ module.exports = function (sequelize, DataTypes) {
         }
       },
       taskAccepter: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
       },
       taskDate: {
         type: DataTypes.DATEONLY,
