@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-    var Task = sequelize.define("Task", {
+    var Task = sequelize.define("tasks", {
       taskID: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -41,7 +41,7 @@ module.exports = function (sequelize, DataTypes) {
         }
       },
       taskAccepter: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING
       },
       taskDate: {
         type: DataTypes.DATEONLY,
