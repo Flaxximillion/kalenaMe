@@ -12,8 +12,8 @@ router.get('/api/:id', function(req, res, next){
   if (req.params.id === "all") {
     //return all users
     models.calendar.findAll({})
-    .then(function(dbUser){
-      res.json(dbUser);
+    .then(function(dbCal){
+      res.json(dbCal);
     }).catch(function(err){
       catchErr(err);
     });
@@ -24,8 +24,8 @@ router.get('/api/:id', function(req, res, next){
         calendarID: req.params.calendarID,
         calendarName: req.params.calendarName
       }
-    }).then(function(dbUser){
-      res.json(dbUser)
+    }).then(function(dbCal){
+      res.json(dbCal)
     }).catch(function(){
       catchErr(err);
     });
@@ -34,19 +34,72 @@ router.get('/api/:id', function(req, res, next){
 
 
 //create new calendar
-router.post('/api/submit/', function(req, res, next){
+router.post('/api/calendar', function(req, res, next){
   console.log(req.body);
-    models.calendar.create(req.body)
-    .then(function(dbUser){
-      res.send("new calendar created and added to database");
-      //redirect to newly created calendar
-    }).catch(function(err){
-      catchErr(err);
+  var newCalendar = {};
+  newCalendar.calendarName = req.body.calendarName;
+  newCalendar.calendarDescription = req.body.calendarDescription;
+
+  var calUsers = req.body.users;
+  findUserInfo(calUsers, function(result){
+    console.log(result);
+  });
+
+  models.calendar.create(newCalendar)
+  .then(function(dbCal){
+    console.log("new calendar created and added to database");
+    res.send();
+    //redirect to newly created calendar
+  }).catch(function(err){
+    catchErr(err);
 });
 
+
+//finds the users for a calendar from the globalUser table and pushes them to the calendarUser table
+function findUserInfo(calUsers, cb){
+  var userData = [];
+  for (var i = 0; i < calUsers.length; i++) {
+    models.globalUser.findOne({
+      where: {
+        globalUserFirstName: calUsers[i].firstName,
+        globalUserLastName: calUsers[i].lastName,
+        globalUserEmail: calUsers[i].email
+      }
+    }).then(function(result){
+      userData.push(result);
+    }).catch(function(err){
+      catchErr(err);
+    });
+  }
+  populateCalendarUser(userData, calData, cb);
+};
+
+
+function populateCalendarUser(userData, calData cb){
+  var calUserData = {};
+
+  for (var i = 0; i < userData.length; i++) {
+    var obj = {
+      calendarUserUUID: userData.globalUserUUID,
+      calendarID:
+    };
+    calUserData.push(obj);
+  }
+
+  models.calendarUser.create(calUserData)
+  .then(function(result){
+    cb(result);
+  }).catch(function(err){
+    catchErr(err);
+  });
+};
+
+
+//displays error if one occurs
 function catchErr(err){
   console.log("");
   console.log("~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~");
   console.log(err.errors);
 }
+
 module.exports = router;
