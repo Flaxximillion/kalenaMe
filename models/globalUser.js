@@ -10,7 +10,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       globalUserFirstName: {
           type: DataTypes.STRING,
-          unique: true,
           validate: {
               isAlphanumeric: true,
               notEmpty: true
@@ -18,7 +17,6 @@ module.exports = function (sequelize, DataTypes) {
       },
       globalUserLastName: {
           type: DataTypes.STRING,
-          unique: true,
           validate: {
               isAlphanumeric: true,
               notEmpty: true

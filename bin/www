@@ -85,6 +85,9 @@ function onError(error) {
  */
 
 function onListening() {
+    var snapshot = new Date();
+    var time = snapshot.toTimeString();
+    console.log(time + " ==> 🌎  Listening on port " + port);
     var addr = server.address();
     var bind = typeof addr === 'string'
         ? 'pipe ' + addr
