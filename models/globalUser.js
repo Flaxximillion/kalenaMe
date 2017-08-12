@@ -1,10 +1,10 @@
 module.exports = function (sequelize, DataTypes) {
-    var GlobalUser = sequelize.define("globalUser", {
+    var GlobalUser = sequelize.define("GlobalUser", {
       globalUserUUID: {
         type: DataTypes.STRING,
+        allowNull: false,
         primaryKey: true,
         validate: {
-          notNull: true,
           notEmpty: true
         }
       },
@@ -13,7 +13,6 @@ module.exports = function (sequelize, DataTypes) {
           unique: true,
           validate: {
               isAlphanumeric: true,
-              notNull: true,
               notEmpty: true
           }
       },
@@ -22,7 +21,6 @@ module.exports = function (sequelize, DataTypes) {
           unique: true,
           validate: {
               isAlphanumeric: true,
-              notNull: true,
               notEmpty: true
           }
       },
@@ -30,7 +28,6 @@ module.exports = function (sequelize, DataTypes) {
           type: DataTypes.STRING,
           validate: {
               not: ["[a-z]", 'i'],
-              notNull: true,
               notEmpty: true
           }
       },
@@ -38,14 +35,12 @@ module.exports = function (sequelize, DataTypes) {
           type: DataTypes.STRING,
           validate: {
               isEmail: true,
-              notNull: true,
               notEmpty: true
           }
       },
       globalUserPassword: {
           type: DataTypes.STRING,
           validate: {
-              notNull: true,
               notEmpty: true,
               len: [5]
           }
