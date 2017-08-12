@@ -4,7 +4,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             primaryKey: true,
             validate: {
-                notNull: true,
+                //notNull: true,
                 notEmpty: true
             }
         },
@@ -12,7 +12,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING,
             primaryKey: true,
             validate: {
-                notNull: true,
+                //notNull: true,
                 notEmpty: true
             }
         }
