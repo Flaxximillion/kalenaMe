@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var models = require("../models");
+var randomstring = require("randomstring");
 var bodyParser = require('body-parser');
 
 var jsonParser = bodyParser.json();
@@ -40,15 +41,18 @@ router.get('/api/:id', function(req, res, next){
 
 
 //creates new user
-router.post('/submit/',urlencodedParser, function(req, res, next){
+router.post('/submit/', urlencodedParser, function(req, res, next){
   console.log(req.body);
-    models.globalUser.create(req.body)
-    .then(function(dbUser){
-      res.send("new user added to database");
-      //redirect to calendar list/create page
-    }).catch(function(err){
-      catchErr(err);
-    });
+  var newUser = req.body;
+  newUser.globalUserUUID = randomstring.generate();
+
+  models.globalUser.create(newUser)
+  .then(function(dbUser){
+    res.send("new user added to database");
+    //redirect to calendar list/create page
+  }).catch(function(err){
+    catchErr(err);
+  });
 });
 
 
