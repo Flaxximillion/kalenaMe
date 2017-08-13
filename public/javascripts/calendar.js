@@ -102,15 +102,4 @@ $(document).ready(function() {
     }
   });
 
-  $("#op").click(function() {
-    $("#sidebar").animate({
-
-      left: '0%'
-
-    });
-    $("#calendar").animate({
-      width: '75%'
-    });
-  });
-
 });

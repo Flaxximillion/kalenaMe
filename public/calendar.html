@@ -42,15 +42,6 @@
       transform: rotate(-90deg);
     }
 
-    #open {
-      float: left;
-      /*width: 5%;*/
-    }
-
-    #close {
-      float: right;
-    }
-
     #taskDetails {
       display: none;
     }
@@ -84,6 +75,10 @@
       /* Could be more or less, depending on screen size */
     }
 
+    .task {
+      cursor: pointer;
+    }
+
   </style>
 
 </head>
@@ -103,10 +98,7 @@
       <li><a href="#">Steve Wozniak</a></li>
     </ul>
   </div>
-  <div id="open">
-    <!-- <button style="font-size:20px;cursor:pointer" id="op">&#9776;</button> -->
-  </div>
-
+  
   <div id="calendar"></div>
 
   <!-- Modals -->
