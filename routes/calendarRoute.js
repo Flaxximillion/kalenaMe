@@ -42,6 +42,7 @@ router.post('/api/submit/', function(req, res, next){
       //redirect to newly created calendar
     }).catch(function(err){
       catchErr(err);
+    });
 });
 
 function catchErr(err){

@@ -77,4 +77,40 @@ $(document).ready(function() {
       addNewTask(day);
     }
   }); // fullCalendar
+
+  // Sidebar
+  var sidebarOpen = true;
+  $("#sidebarToggle").click(function() {
+    if (sidebarOpen) {
+      $("#sidebar").animate({
+        left: '-23%'
+      });
+      $("#calendar").animate({
+        width: '97%'
+      });
+      sidebarOpen = false;
+      $("#sidebarToggle").html("show");
+    } else {
+      $("#sidebar").animate({
+        left: '0%'
+      });
+      $("#calendar").animate({
+        width: '75%'
+      });
+      $("#sidebarToggle").html("hide");
+      sidebarOpen = true;
+    }
+  });
+
+  $("#op").click(function() {
+    $("#sidebar").animate({
+
+      left: '0%'
+
+    });
+    $("#calendar").animate({
+      width: '75%'
+    });
+  });
+
 });

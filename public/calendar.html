@@ -1,40 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Calendar Tests</title>
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" />
+  <!-- <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> -->
+
 
   <style>
-    .modal {
-      position: fixed; /* Stay in place */
-      z-index: 1; /* Sit on top */
-      left: 0;
-      top: 0;
-      width: 100%; /* Full width */
-      height: 100%; /* Full height */
-      overflow: auto; /* Enable scroll if needed */
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    #calendar {
+      float: right;
+      width: 75%;
     }
-    .modalContainer {
-      background-color: #fefefe;
-      margin: 15% auto; /* 15% from the top and centered */
-      padding: 20px;
-      border: 1px solid #888;
-      width: 40%; /* Could be more or less, depending on screen size */
+
+    #sidebar {
+      width: 25%;
+      background-color: #efefef;
+      height: 100%;
+      position: fixed!important;
+      z-index: 1;
+      overflow: auto
     }
+
+    #sidebarToggle {
+      cursor: pointer;
+      position: absolute;
+      padding: 0;
+      margin: 0;
+      right: 0;
+      top: 50%;
+      z-index: 100;
+      -webkit-transform: rotate(-90deg);
+      -moz-transform: rotate(-90deg);
+      -o-transform: rotate(-90deg);
+      -ms-transform: rotate(-90deg);
+      transform: rotate(-90deg);
+    }
+
+    #open {
+      float: left;
+      /*width: 5%;*/
+    }
+
+    #close {
+      float: right;
+    }
+
     #taskDetails {
       display: none;
     }
+
+    .modal {
+      position: fixed;
+      /* Stay in place */
+      z-index: 1;
+      /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0);
+      /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black w/ opacity */
+    }
+
+    .modalContainer {
+      background-color: #fefefe;
+      margin: 15% auto;
+      /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 40%;
+      /* Could be more or less, depending on screen size */
+    }
+
   </style>
 
-
 </head>
+
 <body>
+
+  <div class="sidebar bar-block" id="sidebar">
+    <div id="sidebarToggle">hide</div>
+    <!-- <button id="close"> &times;</button> -->
+    <h3>Members</h3>
+    <ul>
+      <li><a href="#">Ada Lovelace</a> <span class="admin">(admin)</span></li>
+      <li><a href="#">Charles Babbage</a></li>
+      <li><a href="#">Edith Clarke</a></li>
+      <li><a href="#">Grace Hopper</a></li>
+      <li><a href="#">Radia Perlman</a></li>
+      <li><a href="#">Steve Wozniak</a></li>
+    </ul>
+  </div>
+  <div id="open">
+    <!-- <button style="font-size:20px;cursor:pointer" id="op">&#9776;</button> -->
+  </div>
 
   <div id="calendar"></div>
 
@@ -54,4 +125,5 @@
   <script src="./javascripts/calendar.js"></script>
 
 </body>
+
 </html>
