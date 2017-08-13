@@ -1,16 +1,18 @@
 var express = require('express');
 var router = express.Router();
 var models = require("../models");
+var randomstring = require("randomstring");
 var bodyParser = require('body-parser');
 
 var jsonParser = bodyParser.json();
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
+var urlencodedParser = bodyParser.urlencoded({ extended: true });
 
 
-//get all calendars
+//get calendars
 router.get('/api/:id', function(req, res, next){
   if (req.params.id === "all") {
     //return all users
+    console.log("Find all calendars");
     models.calendar.findAll({})
     .then(function(dbCal){
       res.json(dbCal);
@@ -34,59 +36,78 @@ router.get('/api/:id', function(req, res, next){
 
 
 //create new calendar
-router.post('/api/calendar', function(req, res, next){
-  console.log(req.body);
+router.post('/api/calendar', jsonParser, function(req, res, next){
+
   var newCalendar = {};
-  newCalendar.calendarName = req.body.calendarName;
+  var rando = randomstring.generate(3);
+  console.log("RANDO NUMBER: " + rando);
+  var trimmedCalName = req.body.calendarName.trim();
+
+  newCalendar.calendarID = trimmedCalName.replace(/\s/g,'') + "_" + rando;
+  newCalendar.calendarName = trimmedCalName;
   newCalendar.calendarDescription = req.body.calendarDescription;
+  newCalendar.calendarOwner = "";
 
-  var calUsers = req.body.users;
-  findUserInfo(calUsers, function(result){
-    console.log(result);
+  console.log("calendar .post actived!");
+  console.log(newCalendar.calendarID);
+  console.log(newCalendar.calendarName);
+  console.log(newCalendar.calendarDescription);
+  console.log(req.body.users);
+
+  //popluate calendarUser table
+  var newCalInfo = {};
+  newCalInfo.calID = newCalendar.calendarID
+  newCalInfo.users = req.body.users;
+
+  findUserInfo(newCalInfo, function(result){
+    newCalendar.calendarOwner = result;
+    console.log("newCalendar.calendarOwner is " + result);
+    createCal(newCalendar, function(y){
+      console.log("createCal actived! " + newCalendar + " ////////// " + y);
+      res.json(y);//TODO: needs an html pages to redirect to
+    });
   });
-
-  models.calendar.create(newCalendar)
-  .then(function(dbCal){
-    console.log("new calendar created and added to database");
-    res.send();
-    //redirect to newly created calendar
-  }).catch(function(err){
-    catchErr(err);
 });
 
 
 //finds the users for a calendar from the globalUser table and pushes them to the calendarUser table
-function findUserInfo(calUsers, cb){
-  var userData = [];
-  for (var i = 0; i < calUsers.length; i++) {
+function findUserInfo(newCalInfo, cb){
+  console.log("findUserInfo activated!");
+
+  var userData = {};
+
+  for (var i = 0; i < newCalInfo.users.length; i++) {
+    console.log("loop: " + i);
+    var obj = {};
+    var query = {};
+    query.globalUserFirstName = newCalInfo.users[i].firstName;
+    query.globalUserLastName = newCalInfo.users[i].lastName;
+    query.globalUserEmail = newCalInfo.users[i].email;
+    console.log(query);
+
     models.globalUser.findOne({
-      where: {
-        globalUserFirstName: calUsers[i].firstName,
-        globalUserLastName: calUsers[i].lastName,
-        globalUserEmail: calUsers[i].email
-      }
+      where: query,
+      attributes: [globalUserUUID]
     }).then(function(result){
-      userData.push(result);
+      console.log("returned UUID: " + result);
+      userData.calendarUserUUID = result;
+      if (i === 0) {
+        cb(result);
+      }
+      userData.calendarID = newCalInfo.id;
+      populateCalendarUser(userData, function(x){
+        console.log("populateCalendarUser, x is: " + x);
+      });
     }).catch(function(err){
       catchErr(err);
     });
   }
-  populateCalendarUser(userData, calData, cb);
 };
 
 
-function populateCalendarUser(userData, calData cb){
-  var calUserData = {};
-
-  for (var i = 0; i < userData.length; i++) {
-    var obj = {
-      calendarUserUUID: userData.globalUserUUID,
-      calendarID:
-    };
-    calUserData.push(obj);
-  }
-
-  models.calendarUser.create(calUserData)
+function populateCalendarUser(userData, cb){
+  console.log("populateCalendarUser activated!!");
+  models.calendarUser.create(userData)
   .then(function(result){
     cb(result);
   }).catch(function(err){
@@ -95,11 +116,28 @@ function populateCalendarUser(userData, calData cb){
 };
 
 
+function createCal(newCalendar, y){
+  models.calendar.create(newCalendar)
+  .then(function(dbCal){
+    console.log("new calendar created and added to database");
+    y(dbCal);
+  }).catch(function(err){
+    catchErr(err);
+  });
+}
+
+
 //displays error if one occurs
 function catchErr(err){
   console.log("");
   console.log("~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~");
   console.log(err.errors);
 }
+
+router.post("/test", jsonParser, function(req, res){
+  console.log("POST TEST!");
+  console.log(req.body.test[0]);
+  res.send("Hello there");
+});
 
 module.exports = router;
