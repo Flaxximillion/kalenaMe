@@ -38,10 +38,18 @@ function addNewTask(data) {
 
 function showTask(task) {
   // TODO: Trigger a modal for showing task details
+  $("#taskDetails .modalContent").append("<h2>"+task.title+"</h2>");
+  $("#taskDetails .modalContent").append("<p>"+task.description+"</p>");
+  if (task.claimed) {
+    $("#taskDetails .modalContent").append("<p>This task has been claimed by XXX</p>");
+  } else {
+    $("#taskDetails .modalContent").append("<p>This has <strong>not</strong> been claimed.</p>");
+    $("#taskDetails .modalContent").append("<button type='button'>Claim it!</button>");
+  }
+  $("#taskDetails").show();
   console.log(task.title);
   console.log(task.description);
   console.log("Task claimed? " + task.claimed);
-  alert(task.title + "\n" + task.description + "\nTask claimed? " + (task.claimed ? "Yep!" : "Nope!"));
 }
 
 $(document).ready(function() {
