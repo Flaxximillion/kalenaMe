@@ -111,14 +111,13 @@ $(document).ready(function() {
     $(".modal").animate({
       "opacity": 0
     },
-      // animation speed
-      "fast",
-      // animation complete callback
-      function () {
-        console.log("Animation complete");
-        $(".modal").css("display", "none");
-      }
-    );
+    // animation speed
+    "fast",
+    // animation complete callback
+    function () {
+      console.log("Animation complete");
+      $(".modal").css("display", "none");
+    });
   });
 
 });
