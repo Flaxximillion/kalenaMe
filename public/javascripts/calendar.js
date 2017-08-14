@@ -38,7 +38,7 @@ function addNewTask(data) {
 
 function showTask(task) {
   // TODO: Trigger a modal for showing task details
-  $("#taskDetails .modalContent").append("<h2>"+task.title+"</h2>");
+  $("#taskDetails .modalContent").html("<h2>"+task.title+"</h2>");
   $("#taskDetails .modalContent").append("<p>"+task.description+"</p>");
   if (task.claimed) {
     $("#taskDetails .modalContent").append("<p>This task has been claimed by XXX</p>");
@@ -47,6 +47,9 @@ function showTask(task) {
     $("#taskDetails .modalContent").append("<button type='button'>Claim it!</button>");
   }
   $("#taskDetails").show();
+  $("#taskDetails").animate({
+    "opacity": 100,
+  }, "fast");
   console.log(task.title);
   console.log(task.description);
   console.log("Task claimed? " + task.claimed);
@@ -100,6 +103,22 @@ $(document).ready(function() {
       $("#sidebarToggle").html("hide");
       sidebarOpen = true;
     }
+  });
+
+  // Modals
+  $(".modal .close").on("click", document, function () {
+    // When close button is clicked, animate opacity to 0
+    $(".modal").animate({
+      "opacity": 0
+    },
+      // animation speed
+      "fast",
+      // animation complete callback
+      function () {
+        console.log("Animation complete");
+        $(".modal").css("display", "none");
+      }
+    );
   });
 
 });

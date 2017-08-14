@@ -46,6 +46,14 @@
       display: none;
     }
 
+    .modalContainer {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 40%;
+    }
+
     .modal {
       position: fixed;
       /* Stay in place */
@@ -65,15 +73,16 @@
       /* Black w/ opacity */
     }
 
-    .modalContainer {
-      background-color: #fefefe;
-      margin: 15% auto;
-      /* 15% from the top and centered */
-      padding: 20px;
-      border: 1px solid #888;
-      width: 40%;
-      /* Could be more or less, depending on screen size */
+    .modal .close {
+      cursor: pointer;
+      font-size: 2em;
+      float: right;
     }
+
+    .modalContent {
+      width: 90%;
+    }
+
 
     .task {
       cursor: pointer;
@@ -98,7 +107,7 @@
       <li><a href="#">Steve Wozniak</a></li>
     </ul>
   </div>
-  
+
   <div id="calendar"></div>
 
   <!-- Modals -->
