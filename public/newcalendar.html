@@ -1,81 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
-		<!-- <link rel="stylesheet" href="stylesheets/style.css" type="text/css" /> -->
-		<title>calander!</title>
-		 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-	</head>
-	
-	<body>
-    <h2>Create new calendar</h2>
-    
-    <div>
-    <form>
-  <label for="usr">Name of calander:</label>
-  <input type="text" class="form-control" id="calendarName" required>
-   </div>
-   <h2>Invite members</h2>
-   <div id="userRows">
-		 <label for="usr">Email</label>
-		 <input type="email" class="form-control" id="email0" placeholder="email@address.com" required>
-		 <label class="pwd">Name</label>
-		 <input type="name" class="form-control" id="name0" placeholder="Full Name" required>
-    </div>
-    <div>
-    	<button type="button" id="addAnother">+ Add another</button>
-    </div>
-    <div>
-    	<button type="submit" id="gotoCalendar">Go to calendar ></button>
-    </div>
-    </form>
-	</body>
+	<!-- <link rel="stylesheet" href="stylesheets/style.css" type="text/css" /> -->
+	<title>Create a new calendar</title>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+</head>
+
+<body>
+	<h2>Create new calendar</h2>
+
+	<form>
+		<div>
+			<label for="calendarName">Name of calendar:</label>
+			<input type="text" class="form-control" id="calendarName" required>
+		</div>
+
+		<div>
+			<label for="calendarDescription">Description of calendar:</label>
+			<textarea rows="3" cols="40" class="form-control" id="calendarDescription"></textarea>
+		</div>
+
+		<h2>Invite members</h2>
+		<div id="userRows">
+			<label for="email0">Email</label>
+			<input type="email" class="form-control" id="email0" placeholder="email@address.com" required>
+			<!-- <label class="pwd">Name</label>
+		 <input type="name" class="form-control" id="name0" placeholder="Full Name" required> -->
+		</div>
+		<div>
+			<button type="button" id="addAnother">+ Add another</button>
+		</div>
+		<div>
+			<button type="submit" id="gotoCalendar">Go to calendar</button>
+		</div>
+	</form>
+</body>
 <script type="text/javascript">
 
-var calendar = {
-	name: "",
-	users: []
-};
+	// Globals
+	var calendar = {
+		calendarName: "",
+		calendarDescription: "",
+		users: []
+	};
+	var userCounter = 0;
 
-// var users=[];
-$(document).ready(function(){
+	$(document).ready(function() {
 
-	var userCounter=0;
-	
+		$("#addAnother").on("click", function() {
+			// console.log($("#name"+userCounter).val());
+			console.log($("#email" + userCounter).val());
 
-	$("#addAnother").on("click", function() {
-		console.log($("#name"+userCounter).val());
-		console.log($("#email"+userCounter).val());
+			userCounter++;
+			console.log("userCounter = " + userCounter)
 
+			$("#userRows").append('<div><label for="email' + userCounter + '"">Email</label><input type="email" class="form-control" id="email' + userCounter + '" placeholder="email@address.com" required></div>');
+		});
 
-		userCounter++;
-		console.log("userCounter = " + userCounter)
+		$("#gotoCalendar").on("click", function(e) {
+			e.preventDefault();
+			userCounter++;
 
-		$("#userRows").append('<div><label for="usr">Email</label><input type="email" class="form-control" id="email'+userCounter+'" placeholder="email@address.com" required><label class="pwd">Name</label><input type="name" class="form-control" id="name'+userCounter+'" placeholder="Full Name" required></div>');
-	});
-		
-	$("#gotoCalendar").on("click", function() {
-		userCounter++;
-
-		calendar.name = $("#calendarName").val();
-
-		// Go to calendar button was clicked, do this stuff...
-		for (var i = 0; i < userCounter; i++) {
-
-			var obj = {
-				name: $("#name"+i).val(),
-				email: $("#email"+i).val()
+			if ( $("#calendarName").val() ) {
+				calendar.calendarName = $("#calendarName").val().trim();
 			}
 
-			calendar.users.push(obj);	
-			
-		}
-		console.log(calendar);
-	});
-    
-});
+			if ( $("#calendarDescription").val() ) {
+				calendar.calendarDescription = $("#calendarDescription").val().trim();
+			}
 
+			// Go to calendar button was clicked, do this stuff...
+			for (var i = 0; i < userCounter; i++) {
+
+			if ($("#email" + i).val() !== "") {
+					var obj = {
+						// name: $("#name"+i).val(),
+						email: $("#email" + i).val().trim()
+					}
+					calendar.users.push(obj);
+				}
+			}
+			console.log(calendar);
+			// Clear out our globals
+			calendar = {
+				calendarName: "",
+				calendarDescription: "",
+				users: []
+			};
+			userCounter = 0;
+		});
+
+	});
 </script>
+
 </html>
