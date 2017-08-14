@@ -59,68 +59,78 @@ router.post('/api/calendar', jsonParser, function(req, res, next){
   newCalInfo.calID = newCalendar.calendarID
   newCalInfo.users = req.body.users;
 
-  findUserInfo(newCalInfo, function(result){
-    newCalendar.calendarOwner = result;
-    console.log("newCalendar.calendarOwner is " + result);
-    createCal(newCalendar, function(y){
-      console.log("createCal actived! " + newCalendar + " ////////// " + y);
-      res.json(y);//TODO: needs an html pages to redirect to
-    });
+  var numberOfLoops = newCalInfo.users.length;
+  controlQuery(newCalInfo, createCal, numberOfLoops, 0, function(data){
+    res.send(data);
   });
-});
+
+});//--router.post--
 
 
-//finds the users for a calendar from the globalUser table and pushes them to the calendarUser table
-function findUserInfo(newCalInfo, cb){
-  console.log("findUserInfo activated!");
 
-  var userData = {};
+function controlQuery(newCalInfo, fnToCallWhenDone, numberOfLoops, zero, dbResponse){
+  console.log("controlQuery activated!");
 
-  for (var i = 0; i < newCalInfo.users.length; i++) {
-    console.log("loop: " + i);
-    var obj = {};
-    var query = {};
-    query.globalUserFirstName = newCalInfo.users[i].firstName;
-    query.globalUserLastName = newCalInfo.users[i].lastName;
-    query.globalUserEmail = newCalInfo.users[i].email;
-    console.log(query);
-
-    models.globalUser.findOne({
-      where: query,
-      attributes: [globalUserUUID]
-    }).then(function(result){
-      console.log("returned UUID: " + result);
-      userData.calendarUserUUID = result;
-      if (i === 0) {
-        cb(result);
-      }
-      userData.calendarID = newCalInfo.id;
-      populateCalendarUser(userData, function(x){
-        console.log("populateCalendarUser, x is: " + x);
-      });
-    }).catch(function(err){
-      catchErr(err);
+  if (numberOfLoops === 0) {
+    return fnToCallWhenDone(newCalendar, function(cb){
+      dbResponse(cb);
     });
   }
-};
+  findUserInfo(newCalInfo, zero, function whenDone(result){
+    console.log("whenDone activated!!! " + result);
+    if (zero === 0) {
+      newCalendar.calendarOwner = result.globalUserUUID;
+    }
+    controlQuery(newCalInfo, fnToCallWhenDone, numberOfLoops - 1, zero ++);
+  });
+}//--controlQuery--
 
 
-function populateCalendarUser(userData, cb){
-  console.log("populateCalendarUser activated!!");
-  models.calendarUser.create(userData)
+
+function findUserInfo(newCalInfo, zero, cb){
+  console.log("findUserInfo activated: " + zero);
+  var calData = {};
+  var query = {};
+  query.globalUserFirstName = newCalInfo.users[zero].firstName;
+  query.globalUserLastName = newCalInfo.users[zero].lastName;
+  query.globalUserEmail = newCalInfo.users[zero].email;
+
+  models.globalUser.findOne({
+    where: query
+  })
   .then(function(result){
+    console.log("!!!!!!!!!!!!");
     cb(result);
+    calData.calendarUserUUID = result.globalUserUUID;
+    calData.calendarID = newCalInfo.calID;
+    console.log(calData.globalUserUUID);
+    console.log(calData.calendarID);
+    populateCalendarUser(calData);
+  })
+  .catch(function(err){
+    catchErr(err);
+  });
+}//--findUserInfo--
+
+
+
+function populateCalendarUser(calData){
+  console.log("populateCalendarUser activated!!");
+  models.calendarUser.create(calData)
+  .then(function(result){
+    console.log("Calendar ID and corresponding User have been added to database");
   }).catch(function(err){
     catchErr(err);
   });
 };
 
 
-function createCal(newCalendar, y){
+function createCal(newCalendar, cb){
+  console.log("createCal activated!!!!");
   models.calendar.create(newCalendar)
   .then(function(dbCal){
     console.log("new calendar created and added to database");
-    y(dbCal);
+    cb(dbCal);
   }).catch(function(err){
     catchErr(err);
   });
