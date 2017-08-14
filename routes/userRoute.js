@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var models = require("../models");
+var randomstring = require("randomstring");
 var bodyParser = require('body-parser');
 var uuid = require('uuid/v4');
 var bcrypt = require('bcryptjs');
