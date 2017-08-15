@@ -81,7 +81,7 @@ router.post('/submit/', urlencodedParser, function (req, res, next) {
 function catchErr(err) {
     console.log("");
     console.log("~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~");
-    console.log(err);
+    console.log(err.Error);
 }
 
 module.exports = router;
