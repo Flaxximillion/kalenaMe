@@ -25,7 +25,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', calendar);
 app.use('/calendarRoute', calendarRoute);
 app.use('/userRoute', userRoute);
 app.use('/createCalendar', createCalendar);
