@@ -8,7 +8,7 @@ module.exports = function (sequelize, DataTypes) {
             }
         },
         calendarID: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             validate: {
                 //notNull: true,
                 notEmpty: true

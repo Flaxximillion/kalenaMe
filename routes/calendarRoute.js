@@ -105,7 +105,8 @@ function findUserInfo(newCalInfo, zero, cb){
     where: query
   })
   .then(function(result){
-    console.log(result);
+    console.log("");
+    console.log(result.dataValues);
     console.log("findUserInfo database query complete");
 
     if (result) {
@@ -154,7 +155,7 @@ function createCal(newCalendar, cb){
 function catchErr(err){
   console.log("");
   console.log("~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~");
-  console.log(err);
+  console.log(err.Error);
 }
 
 
