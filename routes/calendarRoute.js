@@ -83,12 +83,12 @@ router.get('/api/:id', function(req, res, next){
 router.post('/api/submit/', function (req, res, next) {
     console.log(req.body);
     models.calendar.create(req.body)
-        .then(function (dbUser) {
-            res.send("new calendar created and added to database");
-            //redirect to newly created calendar
-        }).catch(function (err) {
-        catchErr(err);
-    })
+    .then(function(dbUser){
+      res.send("new calendar created and added to database");
+      //redirect to newly created calendar
+    }).catch(function(err){
+      catchErr(err);
+    });
 });
 
 function catchErr(err) {
