@@ -25,6 +25,7 @@ models.sequelize.sync().then(function() {
      * Listen on provided port, on all network interfaces.
      */
     server.listen(port, function() {
+        console.log("server up");
         debug('Express server listening on port ' + server.address().port);
     });
     server.on('error', onError);
@@ -84,6 +85,9 @@ function onError(error) {
  */
 
 function onListening() {
+    var snapshot = new Date();
+    var time = snapshot.toTimeString();
+    console.log(time + " ==> 🌎  Listening on port " + port);
     var addr = server.address();
     var bind = typeof addr === 'string'
         ? 'pipe ' + addr

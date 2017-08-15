@@ -1,58 +1,52 @@
 module.exports = function (sequelize, DataTypes) {
-    var GlobalUser = sequelize.define("GlobalUser", {
-      globalUserUUID: {
-        type: DataTypes.STRING,
-        primaryKey: true,
-        validate: {
-          notNull: true,
-          notEmpty: true
+    var GlobalUser = sequelize.define("globalUser", {
+            globalUserUUID: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                primaryKey: true,
+                validate: {
+                    notEmpty: true
+                }
+            },
+            globalUserFirstName: {
+                type: DataTypes.STRING,
+                validate: {
+                    isAlphanumeric: true,
+                    notEmpty: true
+                }
+            },
+            globalUserLastName: {
+                type: DataTypes.STRING,
+                validate: {
+                    isAlphanumeric: true,
+                    notEmpty: true
+                }
+            },
+            globalUserPhone: {
+                type: DataTypes.STRING,
+                validate: {
+                    not: ["[a-z]", 'i'],
+                    notEmpty: true
+                }
+            },
+            globalUserEmail: {
+                type: DataTypes.STRING,
+                validate: {
+                    isEmail: true,
+                    notEmpty: true
+                }
+            },
+            globalUserHash: {
+                type: DataTypes.STRING,
+                validate: {
+                    notEmpty: true,
+                    len: [5]
+                }
+            }
         }
-      },
-      globalUserFirstName: {
-          type: DataTypes.STRING,
-          unique: true,
-          validate: {
-              isAlphanumeric: true,
-              notNull: true,
-              notEmpty: true
-          }
-      },
-      globalUserLastName: {
-          type: DataTypes.STRING,
-          unique: true,
-          validate: {
-              isAlphanumeric: true,
-              notNull: true,
-              notEmpty: true
-          }
-      },
-      globalUserPhone: {
-          type: DataTypes.STRING,
-          validate: {
-              not: ["[a-z]", 'i'],
-              notNull: true,
-              notEmpty: true
-          }
-      },
-      globalUserEmail: {
-          type: DataTypes.STRING,
-          validate: {
-              isEmail: true,
-              notNull: true,
-              notEmpty: true
-          }
-      },
-      globalUserPassword: {
-          type: DataTypes.STRING,
-          validate: {
-              notNull: true,
-              notEmpty: true,
-              len: [5]
-          }
-      }
-    }, {
-        timestamps: false
-    });
+        , {
+            timestamps: false
+        });
 
-  return GlobalUser;
+    return GlobalUser;
 };
