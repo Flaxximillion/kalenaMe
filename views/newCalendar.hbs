@@ -1,44 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
+<h2>Create new calendar</h2>
 
-<head>
-	<meta charset="UTF-8">
-	<!-- <link rel="stylesheet" href="stylesheets/style.css" type="text/css" /> -->
-	<title>Create a new calendar</title>
+<form>
+  <div>
+    <label for="calendarName">Name of calendar:</label>
+    <input type="text" class="form-control" id="calendarName" required>
+  </div>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-</head>
+  <div>
+    <label for="calendarDescription">Description of calendar:</label>
+    <textarea rows="3" cols="40" class="form-control" id="calendarDescription"></textarea>
+  </div>
 
-<body>
-	<h2>Create new calendar</h2>
+  <h2>Invite members</h2>
+  <div id="userRows">
+    <label for="email0">Email</label>
+    <input type="email" class="form-control" id="email0" placeholder="email@address.com" required>
+    <!-- <label class="pwd">Name</label>
+   <input type="name" class="form-control" id="name0" placeholder="Full Name" required> -->
+  </div>
+  <div>
+    <button type="button" id="addAnother">+ Add another</button>
+  </div>
+  <div>
+    <button type="submit" id="gotoCalendar">Go to calendar</button>
+  </div>
+</form>
 
-	<form>
-		<div>
-			<label for="calendarName">Name of calendar:</label>
-			<input type="text" class="form-control" id="calendarName" required>
-		</div>
-
-		<div>
-			<label for="calendarDescription">Description of calendar:</label>
-			<textarea rows="3" cols="40" class="form-control" id="calendarDescription"></textarea>
-		</div>
-
-		<h2>Invite members</h2>
-		<div id="userRows">
-			<label for="email0">Email</label>
-			<input type="email" class="form-control" id="email0" placeholder="email@address.com" required>
-			<!-- <label class="pwd">Name</label>
-		 <input type="name" class="form-control" id="name0" placeholder="Full Name" required> -->
-		</div>
-		<div>
-			<button type="button" id="addAnother">+ Add another</button>
-		</div>
-		<div>
-			<button type="submit" id="gotoCalendar">Go to calendar</button>
-		</div>
-	</form>
-</body>
 <script type="text/javascript">
 
 	// Globals
@@ -103,5 +90,3 @@
 
 	});
 </script>
-
-</html>

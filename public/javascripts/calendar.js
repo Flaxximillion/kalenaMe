@@ -106,6 +106,7 @@ $(document).ready(function() {
   });
 
   // Modals
+  
   $(".modal .close").on("click", document, function () {
     // When close button is clicked, animate opacity to 0
     $(".modal").animate({
