@@ -43,7 +43,9 @@ router.post('/login/', urlencodedParser, function(req, res, next){
     }).then(function(user){
         console.log(user);
         bcrypt.compare(req.body.password, user.globalUserHash).then(function(result){
-            console.log(result);
+            if(result){
+                req.session.sessionid = "test"
+            }
         })
     })
 });
