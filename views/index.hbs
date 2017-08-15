@@ -4,10 +4,66 @@
     <img id="logo" src="../assets/kalenaLogo.png">
   </div>
   <div class="homeButtons">
-    <button class="btn" type="button" name="button">Create calendar</button>
+    <button class="btn" type="button" name="button" id="logIn">LOG IN</button>
     <br>
-    <button class="btn" type="button" name="button">View calendars</button>
+    <button class="btn" type="button" name="button" id="signUp">SIGN UP</button>
   </div>
 
+  <form class="logInForm">
+    <div>
+      <label for="loginInputEmail">Email address</label>
+      <input type="email" class="form-control" id="logInEmail" placeholder="Enter email">
+    </div>
+    <div class="form-group">
+      <label for="loginInputPassword">Password</label>
+      <input type="password" class="form-control" id="logInPassword" placeholder="Password">
+    </div>
+    <button type="submit" class="btn btn-primary" id="logInSubmit">Submit</button>
+  </form>
 
-</div>
+  <form class="signUpForm">
+    <div>
+      <label for="signinInputFirstName">First Name</label>
+      <input type="text" class="form-control" id="signInFirstName" placeholder="Enter email">
+    </div>
+    <div>
+      <label for="signinInputLastName">Last Name</label>
+      <input type="text" class="form-control" id="signInLastName" placeholder="Enter email">
+    </div>
+    <div>
+      <label for="signinInputEmail">Email address</label>
+      <input type="email" class="form-control" id="signInEmail" placeholder="Enter email">
+    </div>
+    <div class="form-group">
+      <label for="signinInputPassword">Password</label>
+      <input type="password" class="form-control" id="signInPassword" placeholder="Password">
+    </div>
+    <div>
+      <label for="signinInputPhone">Phone Number</label>
+      <input type="tel" class="form-control" id="signInName" placeholder="Enter email">
+    </div>
+    <button type="submit" class="btn btn-primary" id="signInSubmit">Submit</button>
+  </form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(".logInForm").hide();
+$(".signUpForm").hide();
+
+$("#logIn").click(function(){
+  $(".homeButtons").hide();
+  $(".isoLogo").hide();
+  $(".logInForm").show();
+});
+
+$("#signUp").click(function(){
+  $(".homeButtons").hide();
+  $(".isoLogo").hide();
+  $(".signUpForm").show();
+});
+
+
+
+
+</script>
