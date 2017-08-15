@@ -6,12 +6,16 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var models = require('./models');
 var passport = require('passport');
+var session = require('express-session');
+var flash = require('connect-flash-plus');
 var passportLocalSequelize = require('passport-local-sequelize');
 
 var UserDB = passportLocalSequelize.defineUser(models.sequelize, {
     firstName: models.Sequelize.STRING,
     lastName: models.Sequelize.STRING,
     email: models.Sequelize.STRING
+}, {
+    usernameField: "email"
 });
 
 var index = require('./routes/index');
@@ -27,34 +31,47 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+    secret: 'super secret session key please do not do a leak',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {secure: true}
+}));
+app.use(flash());
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'express-handlebars');
 
 app.use(passport.initialize());
-app.use(passport.session());
 passport.use(UserDB.createStrategy());
 passport.serializeUser(UserDB.serializeUser());
 passport.deserializeUser(UserDB.deserializeUser());
+app.use(passport.session());
 
-app.post('/login', passport.authenticate('local'), function(req, res){
+app.post('/login', passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: 'Invalid username or password.',
+    successFlash: 'Welcome!'
+}), function (req, res) {
     res.send('logged in');
+    console.log(req.session);
 });
 
-app.post('/create', function(req, res){
+app.post('/create', function (req, res) {
     var newUser = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         username: req.body.username
     };
-    UserDB.register(newUser, req.body.password, function(err, result){
+    UserDB.register(newUser, req.body.password, function (err, result) {
         console.log(err, res);
         res.send(result);
     });
 });
 
-app.get('/logout', function(req, res){
+app.get('/logout', function (req, res) {
     req.logout();
     res.send('loggedout');
 });
