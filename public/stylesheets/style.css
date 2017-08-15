@@ -1,5 +1,5 @@
-/* This comment was made by Justin. EAT IT. */
-/*new mahi */
+/*Global styling
+================================================================================*/
 p {
     display: block;
     -webkit-margin-before: 0;
@@ -17,8 +17,7 @@ body {
   background-size: cover;
 }
 
-.btn {
-  width: 300px;
+button {
   -webkit-border-radius: 28;
   -moz-border-radius: 28;
   border: none;
@@ -29,33 +28,26 @@ body {
   font-size: 18px;
   padding: 10px 20px 10px 20px;
   text-decoration: none;
-  margin: -3px;
   background-color: #4897D8;
   text-transform: uppercase;
   transition: 0.5s;
   cursor:pointer;
 }
 
-.btn:hover {
+button:hover {
   color: white;
   background-color:#71a8d6;
 }
 
-.btn:focus{
+button:focus{
   outline: none;
   color:white;
 }
 
-.homeButtons {
-  position: relative;
-  margin: 0 auto;
-  margin-top: 10px;
-  align-items: center;
-  align-self: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+
+
+/* Index styling
+================================================================================*/
 
 .containerTitle {
   margin: 0 auto;
@@ -69,6 +61,22 @@ body {
   align-content: center;
 }
 
+.homeButtons {
+  position: relative;
+  margin: 0 auto;
+  margin-top: 10px;
+  align-items: center;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.btn {
+  width: 300px;
+  margin: -3px;
+}
+
 #logo {
   position: relative;
   padding: 25px;
@@ -77,4 +85,24 @@ body {
   margin: 0 auto;
   height: 300px;
   width: auto;
+}
+
+
+
+
+
+/* New Calendar styling
+================================================================================*/
+
+.containerNewCal {
+  margin: 0 auto;
+  padding: 20px;
+  /*margin-top: 3.2%;*/
+  position: relative;
+  height: 500px;
+  width: 900px;
+  background-color: white;
+  align-items: center;
+  align-self: center;
+  align-content: center;
 }
