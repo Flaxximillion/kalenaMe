@@ -1,26 +1,30 @@
 module.exports = function (sequelize, DataTypes) {
     var Calendar = sequelize.define("calendar", {
-      calendarID: {
-        type: DataTypes.STRING,
-        primaryKey: true,
-        validate: {
-          notNull: true,
-          notEmpty: true
+        calendarid: {
+            type: DataTypes.STRING,
+            primaryKey: true,
+            validate: {
+                notEmpty: true
+            }
+        },
+        calendarname: {
+            type: DataTypes.STRING,
+            validate: {
+                isAlphanumeric: true,
+                notEmpty: true,
+                len: [1, 100]
+            }
+        },
+        calendardescription: DataTypes.TEXT,
+        calendarowner: {
+            type: DataTypes.STRING,
+            validate: {
+                notEmpty: true
+            }
         }
-      },
-      calendarName: {
-        type: DataTypes.STRING,
-        validate: {
-          isAlphanumeric: true,
-          notNull: true,
-          notEmpty: true,
-          len: [5, 100]
-        }
-      },
-      calendarDescription: DataTypes.TEXT
     }, {
-      timestamps: false
+        timestamps: false
     });
 
-  return Calendar;
+    return Calendar;
 };
