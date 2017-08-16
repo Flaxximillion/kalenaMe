@@ -88,6 +88,16 @@
       cursor: pointer;
     }
 
+    a.claimed {
+      background-color: green;
+      border-color: green;
+    }
+
+    a.unclaimed {
+      background-color: red;
+      border-color: red;
+    }
+
   </style>
 
 </head>
@@ -118,6 +128,9 @@
     <div class="modalContainer">
       <div class="close">&times;</div>
       <div class="modalContent">
+      </div>
+      <div class="claimStatus">
+        <button class="claim" type="button">Claim it!</button>
       </div>
     </div>
   </div>

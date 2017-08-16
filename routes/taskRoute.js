@@ -17,7 +17,8 @@ router.get("/", function (req, res, next) {
         "claimed": data[i].dataValues.taskAccepted,
         "description": data[i].dataValues.taskDescription,
         "className": data[i].dataValues.taskAccepted ? "claimed" : "unclaimed",
-        "claimedBy": data[i].dataValues.taskAccepter
+        "claimedBy": data[i].dataValues.taskAccepter,
+        "id": data[i].dataValues.id
       };
       tasks.events.push(vals);
     }
@@ -28,9 +29,19 @@ router.get("/", function (req, res, next) {
 	});
 });
 
-router.get('/:id', function(req, res, next){
-  res.send('test');
+router.post('/update/:id', function (req, res) {
+  models.tasks.update(
+    req.body,
+    {
+      where: { id: req.params.id }
+    }
+  )
+  .then(function (data) {
+    res.send("DONE.");
+  });
 });
+
+
 
 router.post('/new', function(req, res){
   console.log(req.body);
