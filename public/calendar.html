@@ -88,6 +88,16 @@
       cursor: pointer;
     }
 
+    a.claimed {
+      background-color: green;
+      border-color: green;
+    }
+
+    a.unclaimed {
+      background-color: red;
+      border-color: red;
+    }
+
   </style>
 
 </head>
@@ -106,7 +116,10 @@
       <li><a href="#">Radia Perlman</a></li>
       <li><a href="#">Steve Wozniak</a></li>
     </ul>
-  </div>
+
+  <button id="addtask">Add task</button>
+
+   </div>
 
   <div id="calendar"></div>
 
@@ -115,6 +128,8 @@
     <div class="modalContainer">
       <div class="close">&times;</div>
       <div class="modalContent">
+      </div>
+      <div class="claimStatus">
       </div>
     </div>
   </div>

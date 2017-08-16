@@ -6,12 +6,16 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var models = require('./models');
 var passport = require('passport');
+var session = require('express-session');
+var SequelizeStore = require('connect-session-sequelize')(session.Store);
 var passportLocalSequelize = require('passport-local-sequelize');
 
 var UserDB = passportLocalSequelize.defineUser(models.sequelize, {
     firstName: models.Sequelize.STRING,
     lastName: models.Sequelize.STRING,
     email: models.Sequelize.STRING
+}, {
+    usernameField: "email"
 });
 
 var index = require('./routes/index');
@@ -22,39 +26,82 @@ var taskRoute = require('./routes/taskRoute');
 
 var app = express();
 
+var Session = models.sequelize.define('Sessions', {
+    sid: {
+        type: models.Sequelize.STRING,
+        primaryKey: true
+    },
+    userId: models.Sequelize.STRING,
+    expires: models.Sequelize.DATE,
+    data: models.Sequelize.STRING(50000)
+});
+
+function extendDefaultFields(defaults, session) {
+    return {
+        data: defaults.data,
+        expires: defaults.expires,
+        userId: session.username
+    };
+}
+
+var store = new SequelizeStore({
+    table: 'Sessions',
+    extendDefaultFields: extendDefaultFields,
+    db: models.sequelize
+});
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+    secret: 'super secret session key please do not do a leak',
+    resave: false,
+    saveUninitialized: true,
+    store: store
+}));
+
+store.sync();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'express-handlebars');
 
 app.use(passport.initialize());
-app.use(passport.session());
 passport.use(UserDB.createStrategy());
 passport.serializeUser(UserDB.serializeUser());
 passport.deserializeUser(UserDB.deserializeUser());
 
-app.post('/login', passport.authenticate('local'), function(req, res){
-    res.send('logged in');
+app.post('/login', function(req, res, next){
+    passport.authenticate('local', function(err, user){
+        if(err) return next(err);
+        if(!user) return res.send(
+            {
+                valid: false
+            });
+        req.session.username = user.dataValues.username;
+        res.send(
+            {
+                valid: true,
+                redirect:'/calendar'
+            });
+    })(req, res, next);
 });
 
-app.post('/create', function(req, res){
+app.post('/create', function (req, res) {
     var newUser = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         username: req.body.username
     };
-    UserDB.register(newUser, req.body.password, function(err, result){
+    UserDB.register(newUser, req.body.password, function (err, result) {
         console.log(err, res);
         res.send(result);
     });
 });
 
-app.get('/logout', function(req, res){
+app.get('/logout', function (req, res) {
     req.logout();
     res.send('loggedout');
 });
