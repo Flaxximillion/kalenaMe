@@ -38,6 +38,21 @@ router.get('/api/:id', function (req, res, next) {
     }
 });
 
+//get all calendars
+router.get('/:id', function (req, res, next) {
+      //return specific user
+      models.calendar.findOne({
+          where: {
+              id: req.params.id,
+          }
+      }).then(function (calData) {
+          // res.json(dbUser);
+          res.render("calendar.hbs", {layout: "calendar.hbs", data: calData});
+      }).catch(function (err) {
+          catchErr(err);
+      });
+});
+
 
 
 
@@ -155,7 +170,7 @@ function createCal(newCalendar, cb){
 function catchErr(err){
   console.log("");
   console.log("~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~");
-  console.log(err.Error);
+  console.log(err);
 }
 
 
