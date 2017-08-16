@@ -1,70 +1,6 @@
 // Note that FullCalendar expects a certain format for events (tasks)
 // Additional fields (e.g. description) can be added if desired
 // See: https://fullcalendar.io/docs/event_data/Event_Source_Object/
-// TODO: Populate the tasks object with real data from db
-$("#h1").hide();
-
-function showTask(task) {
-  // TODO: Trigger a modal for showing task details
-  $(".modal .modalContent").html("<h2>" + task.title + "</h2>");
-  $(".modal .modalContent").append("<p>" + task.description + "</p>");
-  if (task.claimed) {
-    $(".modal .claimStatus").html("<p>This task has been claimed by XXX</p>");
-  } else {
-    $(".modal .claimStatus").html("<p>This has <strong>not</strong> been claimed.</p>");
-    $(".modal .claimStatus").append("<button class='claim' data-id='" + task.id + "' type='button'>Claim it!</button>");
-  }
-  $(".modal").show();
-  $(".modal").animate({
-    "opacity": 100,
-  }, "fast");
-  console.log(task.title);
-  console.log(task.description);
-  console.log("Task claimed? " + task.claimed);
-}
-
-function fetchTasks() {
-  $.get("/task")
-    .done(function(tasks) {
-      console.log("AJAX data received");
-      $("#calendar").fullCalendar({
-        // OPTIONS
-        events: tasks,
-        header: {
-          left: 'title',
-          center: 'basicDay,basicWeek,month',
-          right: 'today prev,next'
-        },
-        // CALLBACK EVENTS
-        // After calendar is rendered, before other events are triggered
-        viewRender: function() {
-          console.log("Calendar rendered");
-        },
-        // When an event is clicked
-        eventClick: function(task) {
-          showTask(task);
-        },
-        // When a day is clicked
-        dayClick: function(day) {
-          addNewTask(day);
-        }
-      }); // fullCalendar
-    });
-}
-
-function closeModal(reloadPage) {
-  // When close button is clicked, animate opacity to 0
-  if (reloadPage) {
-    location.reload(true);
-  } else {
-    $(".modal").animate({
-      "opacity": 0
-    }, "fast", function() {
-      console.log("Animation complete");
-      $(".modal").hide();
-    });
-  }
-}
 
 function addNewTask() {
   $(".modal").show();
@@ -106,7 +42,69 @@ function addNewTask() {
   });
 }
 
+function closeModal(reloadPage) {
+  // When close button is clicked, animate opacity to 0
+  if (reloadPage) {
+    location.reload(true);
+  } else {
+    $(".modal").animate({
+      "opacity": 0
+    }, "fast", function() {
+      console.log("Animation complete");
+      $(".modal").hide();
+    });
+  }
+}
+
+function fetchTasks() {
+  $.get("/task")
+    .done(function(tasks) {
+      console.log("AJAX data received");
+      $("#calendar").fullCalendar({
+        // OPTIONS
+        events: tasks,
+        header: {
+          left: 'title',
+          center: 'basicDay,basicWeek,month',
+          right: 'today prev,next'
+        },
+        // CALLBACK EVENTS
+        // After calendar is rendered, before other events are triggered
+        viewRender: function() {
+          console.log("Calendar rendered");
+        },
+        // When an event is clicked
+        eventClick: function(task) {
+          showTask(task);
+        },
+        // When a day is clicked
+        dayClick: function(day) {
+          addNewTask(day);
+        }
+      }); // fullCalendar
+    });
+}
+
+
+function showTask(task) {
+  // TODO: Trigger a modal for showing task details
+  $(".modal .modalContent").html("<h2>" + task.title + "</h2>");
+  $(".modal .modalContent").append("<p>" + task.description + "</p>");
+  if (task.claimed) {
+    $(".modal .claimStatus").html("<p>This task has been claimed by XXX</p>");
+  } else {
+    $(".modal .claimStatus").html("<p>This has <strong>not</strong> been claimed.</p>");
+    $(".modal .claimStatus").append("<button class='claim' data-id='" + task.id + "' type='button'>Claim it!</button>");
+  }
+  $(".modal").show();
+  $(".modal").animate({
+    "opacity": 100,
+  }, "fast");
+}
+
 $(document).ready(function() {
+
+  $("#h1").hide();
 
   fetchTasks();
 
