@@ -9,8 +9,8 @@ function addNewTask() {
   }, "fast");
 
   $(".modal .modalContent").html('\
-          <form>Task Name:<br><input type="text" id="taskName"><br>\
-          Task Date and Time:<br><input type="datetime-local"  id="taskDate"><br>\
+          <form>Task Name:<br><input type="text" id="taskName" required><br>\
+          Task Date and Time:<br><input type="datetime-local"  id="taskDate" required><br>\
           Task Description:<br><textarea class="form-control" rows="3" id="taskDescription"></textarea><br><br>\
           <input type="submit" value="Submit" id="submit">\
           </form>');
@@ -26,6 +26,8 @@ function addNewTask() {
     newTask.taskCalendar = 1;
     newTask.taskAccepted = false;
 
+    console.log(newTask.taskDate);
+
     $.ajax({
         url: '/task/new',
         method: "POST",
@@ -39,7 +41,7 @@ function addNewTask() {
         // callback
         closeModal(true);
       });
-  });
+    });
 }
 
 function closeModal(reloadPage) {
