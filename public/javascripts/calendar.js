@@ -59,18 +59,17 @@ function fetchTasks() {
 
 function closeModal(reloadPage) {
   // When close button is clicked, animate opacity to 0
-  $(".modal").animate({
-    "opacity": 0
-  }, "fast", function() {
-    console.log("Animation complete");
-    $(".modal").hide();
-    if (reloadPage) {
-      location.reload(true);
-    }
-  });
-
+  if (reloadPage) {
+    location.reload(true);
+  } else {
+    $(".modal").animate({
+      "opacity": 0
+    }, "fast", function() {
+      console.log("Animation complete");
+      $(".modal").hide();
+    });
+  }
 }
-
 
 $(document).ready(function() {
 
