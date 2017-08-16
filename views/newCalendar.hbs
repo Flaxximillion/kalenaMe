@@ -3,18 +3,18 @@
 <form>
   <div>
     <label for="calendarName">Name of calendar:</label>
-    <input type="text" class="form-control" id="calendarName" required>
+    <input type="text" name="calendarName" class="form-control" id="calendarName" required>
   </div>
 
   <div>
     <label for="calendarDescription">Description of calendar:</label>
-    <textarea rows="3" cols="40" class="form-control" id="calendarDescription"></textarea>
+    <textarea rows="3" cols="40" name="calendarDescription" class="form-control" id="calendarDescription"></textarea>
   </div>
 
   <h2>Invite members</h2>
   <div id="userRows">
     <label for="email0">Email</label>
-    <input type="email" class="form-control" id="email0" placeholder="email@address.com" required>
+    <input type="email" name="inviteEmail" class="form-control" id="email0" placeholder="email@address.com" required>
     <!-- <label class="pwd">Name</label>
    <input type="name" class="form-control" id="name0" placeholder="Full Name" required> -->
   </div>
@@ -25,6 +25,9 @@
     <button type="submit" id="gotoCalendar">Go to calendar</button>
   </div>
 </form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.js"></script>
 
 <script type="text/javascript">
 
@@ -43,14 +46,13 @@
 			console.log($("#email" + userCounter).val());
 
 			userCounter++;
-			console.log("userCounter = " + userCounter)
+			console.log("userCounter = " + userCounter);
 
-			$("#userRows").append('<div><label for="email' + userCounter + '"">Email</label><input type="email" class="form-control" id="email' + userCounter + '" placeholder="email@address.com" required></div>');
+			$("#userRows").append('<div><label for="email' + userCounter + '"">Email</label><input name="inviteEmail" type="email" class="form-control" id="email' + userCounter + '" placeholder="email@address.com" required></div>');
 		});
 
 		$("#gotoCalendar").on("click", function(e) {
 			e.preventDefault();
-			userCounter++;
 
 			if ( $("#calendarName").val() ) {
 				calendar.calendarName = $("#calendarName").val().trim();
@@ -61,17 +63,18 @@
 			}
 
 			// Go to calendar button was clicked, do this stuff...
-			for (var i = 0; i < userCounter; i++) {
+			for (var i = 0; i <= userCounter; i++) {
+			    console.log(i);
 
 			if ($("#email" + i).val() !== "") {
-					var obj = {
-						// name: $("#name"+i).val(),
-						email: $("#email" + i).val().trim()
-					}
-					calendar.users.push(obj);
+					calendar.users.push($("#email" + i).val().trim());
 				}
 			}
 			console.log(calendar);
+
+            axios.post('/calendar', calendar).then(function (response) {
+                console.log(response);
+            });
 
 			// Our $.ajax/$.post call will go here
 			// ...
