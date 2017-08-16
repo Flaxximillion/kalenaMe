@@ -97,16 +97,19 @@ $(document).ready(function() {
       // animation complete callback
       function() {
         console.log("Animation complete");
-        $(".modal").css("display", "none");
+        $(".modal").hide();
       });
   });
 
 
   $("#addtask").on("click", document, function() {
 
-    $("#taskDetails").show();
+    $(".modal").show();
+    $(".modal").animate({
+        "opacity": 100
+      }, "fast");
 
-    $("#taskDetails .modalContent").html('\
+    $(".modal .modalContent").html('\
             <form>Task Name:<br><input type="text" id="taskName">\
             <br>Task Date and Time:<br><input type="datetime-local"  id="taskDate">\
             <br>Task Description:<br><textarea class="form-control" rows="3" id="taskDescription"></textarea>\
