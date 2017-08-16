@@ -16,6 +16,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" />
 
   <style>
+
+  body {
+    padding: 0;
+  }
+
+  .fc-view-container {
+    background-color: #efefef;
+  }
+
     #calendar {
       float: right;
       width: 75%;
@@ -112,6 +121,7 @@
     <!-- <button id="close"> &times;</button> -->
     <h3>Members</h3>
     <ul>
+      <li>{{data.calendarowner}}</li>
       <li><a href="#">Ada Lovelace</a> <span class="admin">(admin)</span></li>
       <li><a href="#">Charles Babbage</a></li>
       <li><a href="#">Edith Clarke</a></li>

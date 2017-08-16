@@ -87,6 +87,15 @@ function fetchTasks() {
     });
 }
 
+// function fetchUsers() {
+//   $.get("/")
+//   .then(function () {
+//     // do stuff
+//     also, i should get calendar ID from this ajax call that I can use
+//    in the addTask() function
+//   });
+// }
+
 
 function showTask(task) {
   // TODO: Trigger a modal for showing task details

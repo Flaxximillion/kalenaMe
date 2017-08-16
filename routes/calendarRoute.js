@@ -38,7 +38,6 @@ router.get('/api/:id', function (req, res, next) {
     }
 });
 
-//get all calendars
 router.get('/:id', function (req, res, next) {
       //return specific user
       models.calendar.findOne({
@@ -46,7 +45,6 @@ router.get('/:id', function (req, res, next) {
               id: req.params.id,
           }
       }).then(function (calData) {
-          // res.json(dbUser);
           res.render("calendar.hbs", {layout: "calendar.hbs", data: calData});
       }).catch(function (err) {
           catchErr(err);
