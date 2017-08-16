@@ -181,7 +181,22 @@ router.get('/api/:id', function (req, res, next) {
         });
     }
 });
-//create new calendar
+
+//get all calendars
+router.get('/:id', function (req, res, next) {
+      //return specific user
+      models.calendar.findOne({
+          where: {
+              id: req.params.id,
+          }
+      }).then(function (calData) {
+          // res.json(dbUser);
+          res.render("calendar.hbs", {layout: "calendar.hbs", data: calData});
+      }).catch(function (err) {
+          catchErr(err);
+      });
+});
+
 
 router.post('/api/calendar', jsonParser, function(req, res, next){
   console.log("\n router.post calendar/api/calendar heard!");
@@ -244,7 +259,7 @@ router.post('/api/calendar', jsonParser, function(req, res, next){
 function catchErr(err){
   console.log("");
   console.log("~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~ERROR~~~");
-  console.log(err);
+
   console.log("\n sequelize error: \n" + err.SequelizeValidationError);
 }
 
