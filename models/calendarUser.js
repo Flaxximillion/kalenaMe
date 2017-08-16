@@ -2,11 +2,14 @@ module.exports = function (sequelize, DataTypes) {
     var CalendarUser = sequelize.define("calendarUser", {
         calendarUserUUID: {
             type: DataTypes.STRING,
-            validate: {
-                //notNull: true,
-                notEmpty: true
-            }
         },
+      calendarUserEmail: {
+        type: DataTypes.STRING,
+        validate: {
+          notEmpty: true,
+          isEmail: true,
+        }
+      },
         calendarID: {
             type: DataTypes.INTEGER,
             validate: {
