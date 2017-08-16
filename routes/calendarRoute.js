@@ -10,7 +10,10 @@ var jsonParser = bodyParser.json();
 
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 
-
+router.get('/', function(req, res){
+    console.log(req.session);
+    res.render('newCalendar.hbs');
+});
 
 
 //get all calendars
@@ -37,10 +40,6 @@ router.get('/api/:id', function (req, res, next) {
         });
     }
 });
-
-
-
-
 
 
 router.post('/api/calendar', jsonParser, function(req, res, next){

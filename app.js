@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var models = require('./models');
 var passport = require('passport');
 var session = require('express-session');
-var flash = require('connect-flash-plus');
+var SequelizeStore = require('connect-session-sequelize')(session.Store);
 var passportLocalSequelize = require('passport-local-sequelize');
 
 var UserDB = passportLocalSequelize.defineUser(models.sequelize, {
@@ -26,6 +26,30 @@ var taskRoute = require('./routes/taskRoute');
 
 var app = express();
 
+var Session = models.sequelize.define('Sessions', {
+    sid: {
+        type: models.Sequelize.STRING,
+        primaryKey: true
+    },
+    userId: models.Sequelize.STRING,
+    expires: models.Sequelize.DATE,
+    data: models.Sequelize.STRING(50000)
+});
+
+function extendDefaultFields(defaults, session) {
+    return {
+        data: defaults.data,
+        expires: defaults.expires,
+        userId: session.username
+    };
+}
+
+var store = new SequelizeStore({
+    table: 'Sessions',
+    extendDefaultFields: extendDefaultFields,
+    db: models.sequelize
+});
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -35,9 +59,10 @@ app.use(session({
     secret: 'super secret session key please do not do a leak',
     resave: false,
     saveUninitialized: true,
-    cookie: {secure: true}
+    store: store
 }));
-app.use(flash());
+
+store.sync();
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'express-handlebars');
@@ -46,16 +71,21 @@ app.use(passport.initialize());
 passport.use(UserDB.createStrategy());
 passport.serializeUser(UserDB.serializeUser());
 passport.deserializeUser(UserDB.deserializeUser());
-app.use(passport.session());
 
-app.post('/login', passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: 'Invalid username or password.',
-    successFlash: 'Welcome!'
-}), function (req, res) {
-    res.send('logged in');
-    console.log(req.session);
+app.post('/login', function(req, res, next){
+    passport.authenticate('local', function(err, user){
+        if(err) return next(err);
+        if(!user) return res.send(
+            {
+                valid: false
+            });
+        req.session.username = user.dataValues.username;
+        res.send(
+            {
+                valid: true,
+                redirect:'/calendar'
+            });
+    })(req, res, next);
 });
 
 app.post('/create', function (req, res) {

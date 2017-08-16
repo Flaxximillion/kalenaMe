@@ -9,43 +9,45 @@
     <button class="btn" type="button" name="button" id="signUp">SIGN UP</button>
   </div>
 
-  <form class="logInForm">
+  <form class="logInForm" id="login" onsubmit="return login()">
     <div>
       <label for="loginInputEmail">Email address</label>
-      <input type="email" class="form-control" id="logInEmail" placeholder="Enter email">
+      <input type="email" name="email" class="form-control" id="logInEmail" placeholder="Enter email">
     </div>
     <div class="form-group">
       <label for="loginInputPassword">Password</label>
-      <input type="password" class="form-control" id="logInPassword" placeholder="Password">
+      <input type="password" name="password" class="form-control" id="logInPassword" placeholder="Password">
     </div>
     <button type="submit" class="btn btn-primary" id="logInSubmit">Submit</button>
   </form>
 
-  <form class="signUpForm">
+  <form class="signUpForm" id="createUser" onsubmit="return createUser()">
     <div>
       <label for="signinInputFirstName">First Name</label>
-      <input type="text" class="form-control" id="signInFirstName" placeholder="Enter email">
+      <input type="text" name="firstName" class="form-control" id="signInFirstName" placeholder="Enter email">
     </div>
     <div>
       <label for="signinInputLastName">Last Name</label>
-      <input type="text" class="form-control" id="signInLastName" placeholder="Enter email">
+      <input type="text" name="lastName" class="form-control" id="signInLastName" placeholder="Enter email">
     </div>
     <div>
       <label for="signinInputEmail">Email address</label>
-      <input type="email" class="form-control" id="signInEmail" placeholder="Enter email">
+      <input type="email" name="email" class="form-control" id="signInEmail" placeholder="Enter email">
     </div>
     <div class="form-group">
       <label for="signinInputPassword">Password</label>
-      <input type="password" class="form-control" id="signInPassword" placeholder="Password">
+      <input type="password" name="password" class="form-control" id="signInPassword" placeholder="Password">
     </div>
-    <div>
-      <label for="signinInputPhone">Phone Number</label>
-      <input type="tel" class="form-control" id="signInName" placeholder="Enter email">
-    </div>
+    <!--<div>-->
+      <!--<label for="signinInputPhone">Phone Number</label>-->
+      <!--<input type="tel" name="phone" class="form-control" id="signInName" placeholder="Enter email">-->
+    <!--</div>-->
     <button type="submit" class="btn btn-primary" id="signInSubmit">Submit</button>
   </form>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.js"></script>
 <script type="text/javascript">
 
 $(".logInForm").hide();
@@ -63,7 +65,40 @@ $("#signUp").click(function(){
   $(".signUpForm").show();
 });
 
+function login() {
+    event.preventDefault();
+    var formData = $('#login').serializeArray();
+    var data = {};
+    formData.map(function (obj) {
+        data[obj.name] = obj.value;
+    });
 
+    console.log(formData, data);
+
+    axios.post('/login', data).then(function (response) {
+        console.log(response);
+        if(!response.data.valid){
+            console.log('error: invalid username or password')
+        } else {
+            window.location = response.data.redirect;
+        }
+    });
+}
+
+function createUser() {
+    event.preventDefault();
+    var formData = $('#createUser').serializeArray();
+    var data = {};
+    formData.map(function (obj) {
+        data[obj.name] = obj.value;
+    });
+
+    console.log(formData, data);
+
+    axios.post('/create', data).then(function (response) {
+        console.log(response);
+    });
+}
 
 
 </script>
