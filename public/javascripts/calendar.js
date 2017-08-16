@@ -4,11 +4,6 @@
 // TODO: Populate the tasks object with real data from db
 $("#h1").hide();
 
-function addNewTask(data) {
-  // TODO: Trigger a modal for inputing a new task
-  console.log("The date that was clicked: " + data);
-}
-
 function showTask(task) {
   // TODO: Trigger a modal for showing task details
   $(".modal .modalContent").html("<h2>" + task.title + "</h2>");
@@ -71,6 +66,46 @@ function closeModal(reloadPage) {
   }
 }
 
+function addNewTask() {
+  $(".modal").show();
+  $(".modal").animate({
+    "opacity": 100
+  }, "fast");
+
+  $(".modal .modalContent").html('\
+          <form>Task Name:<br><input type="text" id="taskName"><br>\
+          Task Date and Time:<br><input type="datetime-local"  id="taskDate"><br>\
+          Task Description:<br><textarea class="form-control" rows="3" id="taskDescription"></textarea><br><br>\
+          <input type="submit" value="Submit" id="submit">\
+          </form>');
+  $(".modal #submit").on("click", document, function(event) {
+    event.preventDefault();
+
+    var newTask = {};
+    newTask.taskName = $("#taskName").val().trim();
+    newTask.taskDate = $("#taskDate").val().trim();
+    newTask.taskDescription = $("#taskDescription").val().trim();
+    // This is fake data for now, will eventually come from session variable
+    newTask.taskRequester = 5;
+    newTask.taskCalendar = 1;
+    newTask.taskAccepted = false;
+
+    $.ajax({
+        url: '/task/new',
+        method: "POST",
+        data: newTask,
+        xhrFields: {
+          withCredentials: true
+        }
+      })
+      .done(function(response) {
+        console.log(response);
+        // callback
+        closeModal(true);
+      });
+  });
+}
+
 $(document).ready(function() {
 
   fetchTasks();
@@ -115,55 +150,10 @@ $(document).ready(function() {
     $.post("/task/update/" + taskID, updateData, function(response) {
       console.log(response);
       closeModal(true);
-
     });
   });
 
   $("#addtask").on("click", document, function() {
-    $(".modal").show();
-    $(".modal").animate({
-      "opacity": 100
-    }, "fast");
-
-    $(".modal .modalContent").html('\
-            <form>Task Name:<br><input type="text" id="taskName"><br>\
-            Task Date and Time:<br><input type="datetime-local"  id="taskDate"><br>\
-            Task Description:<br><textarea class="form-control" rows="3" id="taskDescription"></textarea><br><br>\
-            <input type="submit" value="Submit" id="submit">\
-            </form>');
-    $("#submit").on("click", document, function(event) {
-      event.preventDefault();
-
-      var newTask = {};
-      newTask.taskName = $("#taskName").val().trim();
-      newTask.taskDate = $("#taskDate").val().trim();
-      newTask.taskDescription = $("#taskDescription").val().trim();
-      // This is fake data for now, will eventually come from session variable
-      newTask.taskRequester = 5;
-      newTask.taskCalendar = 1;
-      newTask.taskAccepted = false;
-
-      $.ajax({
-          url: '/task/new',
-          method: "POST",
-          data: newTask,
-          xhrFields: {
-            withCredentials: true
-          }
-        })
-        .done(function(response) {
-          console.log(response);
-          // callback
-          $(".modal").animate({
-              "opacity": 0
-            }, "fast",
-            // animation complete callback
-            function() {
-              console.log("Animation complete");
-              $(".modal").css("display", "none");
-              location.reload(true);
-            });
-        });
-    });
+    addNewTask();
   });
 });
