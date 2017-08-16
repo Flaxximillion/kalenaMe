@@ -44,6 +44,31 @@ button:focus{
   color:white;
 }
 
+label {
+  font-family: "Roboto";
+  text-transform: uppercase;
+  color: #3d3f33;
+  font-size: 14px;
+  padding:10px 10px 20px 0px;
+}
+
+input {
+  border: none;
+  border-bottom: 1px solid #3d3f33;
+  width: 300px;
+  font-family: "Roboto";
+  font-weight: 100;
+  color: #3d3f33;
+  font-size: 14px;
+  margin-bottom: 10px;
+  padding: 10px 0 0 0;
+}
+
+form {
+  padding: 25px;
+}
+
+
 
 
 /* Index styling
@@ -53,8 +78,8 @@ button:focus{
   margin: 0 auto;
   margin-top: 3.2%;
   position: relative;
-  height: 500px;
-  width: 500px;
+  height: 80%;
+  width: 60%;
   background-color: white;
   align-items: center;
   align-self: center;
@@ -62,9 +87,11 @@ button:focus{
 }
 
 .homeButtons {
+  padding-bottom: 45px;
   position: relative;
   margin: 0 auto;
   margin-top: 10px;
+  margin-bottom: 6px;
   align-items: center;
   align-self: center;
   display: flex;
@@ -85,6 +112,61 @@ button:focus{
   margin: 0 auto;
   height: 300px;
   width: auto;
+}
+
+.logInForm {
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  align-content: center;
+}
+
+.logInForm h1 {
+  margin: 10px 0;
+  font-family: "Saira Extra Condensed";
+  font-weight: 800;
+  font-size: 3.6em;
+}
+
+.signUpForm {
+  margin: 0 auto;
+  position: relative;
+  display: -webkit-flex;
+   display: flex;
+   -webkit-align-items: center;
+   align-items: center;
+   -webkit-justify-content: center;
+   justify-content: center;
+   -webkit-flex-flow: column wrap;
+   flex-flow: column wrap;
+   -webkit-align-content: center;
+   align-content: center;
+}
+
+.signUpForm input {
+  width: 200px;
+}
+
+.logoAlone {
+  position: relative;
+  padding: 5px 20px 20px 20px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  height: auto;
+  width: 120px;
+}
+
+#logInSubmit {
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  margin: 25px;
 }
 
 
