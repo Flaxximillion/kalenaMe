@@ -13,6 +13,7 @@ router.get('/', function(req, res){
     res.render('newCalendar.hbs');
 });
 
+
 var resultCouter = 0;
 
 //===================[function]===================
