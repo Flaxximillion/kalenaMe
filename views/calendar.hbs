@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>CALENDAR NAME: {{data.calendarname}}</title>
+  <title>CALENDAR NAME: {{data.calendarName}}</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
   <link rel="stylesheet" href="/stylesheets/style.css" >
@@ -14,8 +14,18 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto:100|Saira+Extra+Condensed" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
 
   <style>
+
+  body {
+    padding: 0;
+  }
+
+  .fc-view-container {
+    background-color: #efefef;
+  }
+
     #calendar {
       float: right;
       width: 75%;
@@ -112,6 +122,7 @@
     <!-- <button id="close"> &times;</button> -->
     <h3>Members</h3>
     <ul>
+      <li>{{data.calendarOwner}}</li>
       <li><a href="#">Ada Lovelace</a> <span class="admin">(admin)</span></li>
       <li><a href="#">Charles Babbage</a></li>
       <li><a href="#">Edith Clarke</a></li>
@@ -137,9 +148,15 @@
     </div>
   </div>
 
+  <script type="text/javascript">
+    var calendarID = {{data.id}};
+  </script>
+
   <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+
+  <script src="https://unpkg.com/flatpickr"></script>
 
   <script src="/javascripts/calendar.js"></script>
 
