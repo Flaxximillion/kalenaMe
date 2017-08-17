@@ -155,6 +155,45 @@ var updateCalUserTable = function(passback, cb){
 };//--updateCalUserTable--
 
 
+
+
+var queryDBforCalInfo = function(id, cb){
+  models.calendar.findOne({
+    where: {
+      id: id,
+    }
+  }).then(function (data) {
+    cb(data);
+
+  }).catch(function (err) {
+    catchErr(err);
+  });
+};//--queryDBforCalInfo--
+
+
+
+
+var queryDBforCalMembers = function(id, cb){
+  var query = {};
+  query.id = id;
+  models.users.findAll({
+    where: {
+      query
+    },
+    attributes: [
+      "id", "firstName"
+    ]
+  })
+  .then(function(calMem){
+    cb(calMem);
+  })
+  .catch(function (err) {
+    catchErr(err);
+  });
+};//--queryDBforCalMembers--
+
+
+
 //===================[GET/POST]===================
 
 //get all calendars
@@ -171,33 +210,42 @@ router.get('/api/:id', function (req, res, next) {
         //return specific user
         models.calendar.findOne({
             where: {
-                calendarID: req.params.calendarID,
-                calendarName: req.params.calendarName
+                id: req.params.id,
             }
         }).then(function (dbUser) {
-            res.json(dbUser)
+            //res.json(dbUser)
+            res.render("calendar", dbUser);
         }).catch(function () {
             catchErr(err);
         });
     }
 });
 
-//get all calendars
+
+
+//get specific calendar and calendar member information
 router.get('/:id', function (req, res, next) {
-      //return specific user
-      models.calendar.findOne({
-          where: {
-              id: req.params.id,
-          }
-      }).then(function (calData) {
-          // res.json(dbUser);
-          res.render("calendar.hbs", {layout: "calendar.hbs", data: calData});
-      }).catch(function (err) {
-          catchErr(err);
-      });
+
+  var id = req.params.id;
+  console.log("router.get/" + id + " heard!");
+
+  queryDBforCalInfo(id, function(data){
+    var calData = data;
+    queryDBforCalMembers(calData.id, function(calMem){
+      calData.calMembersID = [];
+      calData.calFirstNames = [];
+      for (var i = 0; i < calMem.length; i++) {
+        calData.calMembersID[i].push(calMem[i].id);
+        calData.calFirstNames[i].push(calMem[i].firstName);
+      }
+      res.render("calendar.hbs", {layout: "calendar.hbs", data: calData});
+    });
+  });
 });
 
 
+
+//creating new calendar
 router.post('/api/calendar', jsonParser, function(req, res, next){
   console.log("\n router.post calendar/api/calendar heard!");
   var newCalInfo = req.body;
