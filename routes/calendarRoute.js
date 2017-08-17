@@ -155,6 +155,45 @@ var updateCalUserTable = function(passback, cb){
 };//--updateCalUserTable--
 
 
+
+
+var queryDBforCalInfo = function(id, cb){
+  models.calendar.findOne({
+    where: {
+      id: id,
+    }
+  }).then(function (data) {
+    cb(data);
+
+  }).catch(function (err) {
+    catchErr(err);
+  });
+};//--queryDBforCalInfo--
+
+
+
+
+var queryDBforCalMembers = function(id, cb){
+  var query = {};
+  query.id = id;
+  models.users.findAll({
+    where: {
+      query
+    },
+    attributes: [
+      "id", "firstName"
+    ]
+  })
+  .then(function(calMem){
+    cb(calMem);
+  })
+  .catch(function (err) {
+    catchErr(err);
+  });
+};//--queryDBforCalMembers--
+
+
+
 //===================[GET/POST]===================
 
 router.get('/:id', function (req, res, next) {
@@ -185,8 +224,7 @@ router.get('/api/:id', function (req, res, next) {
         //return specific user
         models.calendar.findOne({
             where: {
-                calendarID: req.params.calendarID,
-                calendarName: req.params.calendarName
+                id: req.params.id,
             }
         }).then(function (dbUser) {
             res.json(dbUser);
@@ -196,9 +234,7 @@ router.get('/api/:id', function (req, res, next) {
     }
 });
 
-
-
-
+//creating new calendar
 router.post('/api/calendar', jsonParser, function(req, res, next){
   console.log("\n router.post calendar/api/calendar heard!");
   var newCalInfo = req.body;
