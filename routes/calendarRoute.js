@@ -14,7 +14,7 @@ function loggedIn(req, res, next) {
         } else {
             res.redirect('/');
         }
-    }); 
+    });
 }
 
 router.all('*', loggedIn, function (req, res, next) {
@@ -133,6 +133,7 @@ router.get('/join/:calendarID', function (req, res, next) {
             exclude: ['calendarOwner']},
         raw: true
     }).then(function (result) {
+        console.log("\n RESULTS:");
         console.log(result);
 
         models.calendarUser.findAll({
@@ -158,10 +159,13 @@ router.get('/join/:calendarID', function (req, res, next) {
                 },
                 raw: true
             }).then(function(users){
+                console.log("\n USERS:");
                 console.log(users);
-                res.render("calendar", {
-                  calInfo: result,
-                  memInfo: users
+
+                res.render("calendar.hbs", {
+                  layout: "calendar.hbs",
+                  meminfo: users,
+                  calinfo: result
                 });
             })
         })
