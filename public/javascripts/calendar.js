@@ -9,20 +9,37 @@ function addNewTask() {
   }, "fast");
 
   $(".modal .modalContent").html('\
-          <form>Task Name:<br><input type="text" id="taskName" required><br>\
-          Task Date and Time:<br><input type="datetime-local"  id="taskDate" required><br>\
-          Task Description:<br><textarea class="form-control" rows="3" id="taskDescription"></textarea><br><br>\
+          <form><div id="taskNameLabel">Task Name (required):</div><input type="text" id="taskName" required><br>\
+          <div id="taskDateLabel">Task Date and Time (required):</div><input type="text" id="taskDate" required><br>\
+          <div id="taskDescriptionLabel">Task Description:</div><textarea class="form-control" rows="3" id="taskDescription"></textarea><br><br>\
           <input type="submit" value="Submit" id="submit">\
           </form>');
+
+  // See: https://chmln.github.io/flatpickr/getting-started/
+  $("#taskDate").flatpickr({
+    enableTime: true
+  });
+
   $(".modal #submit").on("click", document, function(event) {
     event.preventDefault();
 
     var newTask = {};
 
-    newTask.taskName = $("#taskName").val().trim();
+    if($("#taskName").val().trim()!= "") {
+      $("#taskNameLabel").css("color", "black");
+      newTask.taskName = $("#taskName").val().trim();
+    } else {
+      $("#taskNameLabel").css("color", "red");
+      return;
+    }
 
-    newTask.taskDate = $("#taskDate").val().trim();
-    console.log(newTask.taskDate);
+    if($("#taskDate").val().trim()!= "") {
+      $("#taskDateLabel").css("color", "black");
+      newTask.taskDate = $("#taskDate").val().trim();
+    } else {
+      $("#taskDateLabel").css("color", "red");
+      return;
+    }
 
     newTask.taskDescription = $("#taskDescription").val().trim();
 
