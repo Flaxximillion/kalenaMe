@@ -14,7 +14,7 @@ function loggedIn(req, res, next) {
         } else {
             res.redirect('/');
         }
-    });
+    }); 
 }
 
 router.all('*', loggedIn, function (req, res, next) {

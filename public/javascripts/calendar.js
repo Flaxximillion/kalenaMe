@@ -9,24 +9,47 @@ function addNewTask() {
   }, "fast");
 
   $(".modal .modalContent").html('\
-          <form>Task Name:<br><input type="text" id="taskName" required><br>\
-          Task Date and Time:<br><input type="datetime-local"  id="taskDate" required><br>\
-          Task Description:<br><textarea class="form-control" rows="3" id="taskDescription"></textarea><br><br>\
+          <form><div id="taskNameLabel">Task Name (required):</div><input type="text" id="taskName" required><br>\
+          <div id="taskDateLabel">Task Date and Time (required):</div><input type="text" id="taskDate" required><br>\
+          <div id="taskDescriptionLabel">Task Description:</div><textarea class="form-control" rows="3" id="taskDescription"></textarea><br><br>\
           <input type="submit" value="Submit" id="submit">\
           </form>');
+
+  // See: https://chmln.github.io/flatpickr/getting-started/
+  $("#taskDate").flatpickr({
+    enableTime: true
+  });
+
   $(".modal #submit").on("click", document, function(event) {
     event.preventDefault();
 
     var newTask = {};
-    newTask.taskName = $("#taskName").val().trim();
-    newTask.taskDate = $("#taskDate").val().trim();
+
+    if($("#taskName").val().trim()!= "") {
+      $("#taskNameLabel").css("color", "black");
+      newTask.taskName = $("#taskName").val().trim();
+    } else {
+      $("#taskNameLabel").css("color", "red");
+      return;
+    }
+
+    if($("#taskDate").val().trim()!= "") {
+      $("#taskDateLabel").css("color", "black");
+      newTask.taskDate = $("#taskDate").val().trim();
+    } else {
+      $("#taskDateLabel").css("color", "red");
+      return;
+    }
+
     newTask.taskDescription = $("#taskDescription").val().trim();
-    // This is fake data for now, will eventually come from session variable
+
+    // This needs to come from session data... no idea how to get that
     newTask.taskRequester = 5;
-    newTask.taskCalendar = 1;
+    // Coming from calendar.hbs
+    newTask.taskCalendar = calendarID;
+    // It's a new task, no one has accepted it yet
     newTask.taskAccepted = false;
 
-    console.log(newTask.taskDate);
 
     $.ajax({
         url: '/task/new',
@@ -86,6 +109,15 @@ function fetchTasks() {
       }); // fullCalendar
     });
 }
+
+// function fetchUsers() {
+//   $.get("/")
+//   .then(function () {
+//     // do stuff
+//     also, i should get calendar ID from this ajax call that I can use
+//    in the addTask() function
+//   });
+// }
 
 
 function showTask(task) {
