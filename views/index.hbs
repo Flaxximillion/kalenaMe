@@ -1,146 +1,103 @@
-
 <div class="containerTitle">
-  <div class="isoLogo">
-    <img id="logo" src="../assets/kalenaLogo.png">
-  </div>
-  <div class="homeButtons">
-    <button class="btn" type="button" name="button" id="logIn">LOG IN</button>
-    <br>
-    <button class="btn" type="button" name="button" id="signUp">SIGN UP</button>
-  </div>
-
-<<<<<<< HEAD
-  <form class="logInForm">
-    <img class="logoAlone" src="../assets/kalenaLogoAlone.png">
-    <h1>LOG IN</h1>
-    <div class="loginInputs">
-      <div>
-        <label for="loginInputEmail">Email address</label><br>
-        <input type="email" class="form-control" id="logInEmail">
-      </div>
-      <div class="form-group">
-        <label for="loginInputPassword">Password</label><br>
-        <input type="password" class="form-control" id="logInPassword">
-      </div>
-=======
-  <form class="logInForm" id="login" onsubmit="return login()">
-    <div>
-      <label for="loginInputEmail">Email address</label>
-      <input type="email" name="email" class="form-control" id="logInEmail" placeholder="Enter email">
+    <div class="isoLogo">
+        <img id="logo" src="../assets/kalenaLogo.png">
     </div>
-    <div class="form-group">
-      <label for="loginInputPassword">Password</label>
-      <input type="password" name="password" class="form-control" id="logInPassword" placeholder="Password">
->>>>>>> upstream/master
+    <div class="homeButtons">
+        <button class="btn" type="button" name="button" id="logIn">LOG IN</button>
+        <br>
+        <button class="btn" type="button" name="button" id="signUp">SIGN UP</button>
     </div>
-    <button type="submit" class="btn btn-primary" id="logInSubmit">Submit</button>
-  </form>
-
-<<<<<<< HEAD
-  <form class="signUpForm">
-    <img class="logoAlone" src="../assets/kalenaLogoAlone.png">
-    <h1>SIGN UP</h1>
-    <div id="firstName">
-      <label for="signinInputFirstName">First Name</label><br>
-      <input type="text" class="form-control" id="signUpFirstName">
-    </div>
-    <div id="lastName">
-      <label for="signinInputLastName">Last Name</label><br>
-      <input type="text" class="form-control" id="signUpLastName">
-    </div>
-    <div>
-      <label for="signinInputEmail">Email address</label><br>
-      <input type="email" class="form-control" id="signUpEmail">
-    </div>
-    <div class="form-group">
-      <label for="signinInputPassword">Password</label><br>
-      <input type="password" class="form-control" id="signUpPassword">
-    </div>
-    <div>
-      <label for="signinInputPhone">Phone Number</label><br>
-      <input type="tel" class="form-control" id="signUpPhone">
-=======
-  <form class="signUpForm" id="createUser" onsubmit="return createUser()">
-    <div>
-      <label for="signinInputFirstName">First Name</label>
-      <input type="text" name="firstName" class="form-control" id="signInFirstName" placeholder="Enter email">
-    </div>
-    <div>
-      <label for="signinInputLastName">Last Name</label>
-      <input type="text" name="lastName" class="form-control" id="signInLastName" placeholder="Enter email">
-    </div>
-    <div>
-      <label for="signinInputEmail">Email address</label>
-      <input type="email" name="email" class="form-control" id="signInEmail" placeholder="Enter email">
-    </div>
-    <div class="form-group">
-      <label for="signinInputPassword">Password</label>
-      <input type="password" name="password" class="form-control" id="signInPassword" placeholder="Password">
->>>>>>> upstream/master
-    </div>
-    <!--<div>-->
-      <!--<label for="signinInputPhone">Phone Number</label>-->
-      <!--<input type="tel" name="phone" class="form-control" id="signInName" placeholder="Enter email">-->
-    <!--</div>-->
-    <button type="submit" class="btn btn-primary" id="signInSubmit">Submit</button>
-  </form>
+    <form class="logInForm" id="login" onSubmit="return login()">
+        <img class="logoAlone" src="../assets/kalenaLogoAlone.png">
+        <h1>LOG IN</h1>
+        <div class="loginInputs">
+            <div>
+                <label for="loginInputEmail">Email address</label><br>
+                <input type="email" name="email" class="form-control" id="logInEmail">
+            </div>
+            <div class="form-group">
+                <label for="loginInputPassword">Password</label><br>
+                <input type="password" name="password" class="form-control" id="logInPassword">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" id="loginSubmit">Submit</button>
+    </form>
+    <form class="signUpForm" id="createUser" onsubmit="return createUser()">
+        <div>
+            <label for="signinInputFirstName">First Name</label>
+            <input type="text" name="firstName" class="form-control" id="signInFirstName" placeholder="Enter email">
+        </div>
+        <div>
+            <label for="signinInputLastName">Last Name</label>
+            <input type="text" name="lastName" class="form-control" id="signInLastName" placeholder="Enter email">
+        </div>
+        <div>
+            <label for="signinInputEmail">Email address</label>
+            <input type="email" name="email" class="form-control" id="signInEmail" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+            <label for="signinInputPassword">Password</label>
+            <input type="password" name="password" class="form-control" id="signInPassword" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary" id="signInSubmit">Submit</button>
+    </form>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.js"></script>
 <script type="text/javascript">
 
-$(".logInForm").hide();
-$(".signUpForm").hide();
+    $(".logInForm").hide();
+    $(".signUpForm").hide();
 
-$("#logIn").click(function(){
-  $(".homeButtons").hide();
-  $(".isoLogo").hide();
-  $(".logInForm").show();
-});
-
-$("#signUp").click(function(){
-  $(".homeButtons").hide();
-  $(".isoLogo").hide();
-  $(".signUpForm").show();
-});
-
-function login() {
-    event.preventDefault();
-    var formData = $('#login').serializeArray();
-    var data = {};
-    formData.map(function (obj) {
-        data[obj.name] = obj.value;
+    $("#logIn").click(function () {
+        $(".homeButtons").hide();
+        $(".isoLogo").hide();
+        $(".logInForm").show();
     });
 
-    console.log(formData, data);
-
-    axios.post('/login', data).then(function (response) {
-        console.log(response);
-        if(!response.data.valid){
-            console.log('error: invalid username or password')
-        } else {
-            window.location = response.data.redirect;
-        }
-    });
-}
-
-function createUser() {
-    event.preventDefault();
-    var formData = $('#createUser').serializeArray();
-    var data = {};
-    formData.map(function (obj) {
-        data[obj.name] = obj.value;
+    $("#signUp").click(function () {
+        $(".homeButtons").hide();
+        $(".isoLogo").hide();
+        $(".signUpForm").show();
     });
 
-    console.log(formData, data);
+    function login() {
+        event.preventDefault();
+        var formData = $('#login').serializeArray();
+        var data = {};
+        formData.map(function (obj) {
+            data[obj.name] = obj.value;
+        });
 
-    axios.post('/create', data).then(function (response) {
-        if(!response.data.valid){
-            console.log('error: invalid username or password')
-        } else {
-            window.location = response.data.redirect;
-        }
-    });
-}
+        console.log(formData, data);
+
+        axios.post('/login', data).then(function (response) {
+            console.log(response);
+            if (!response.data.valid) {
+                console.log('error: invalid username or password')
+            } else {
+                window.location = response.data.redirect;
+            }
+        });
+    }
+
+    function createUser() {
+        event.preventDefault();
+        var formData = $('#createUser').serializeArray();
+        var data = {};
+        formData.map(function (obj) {
+            data[obj.name] = obj.value;
+        });
+
+        console.log(formData, data);
+
+        axios.post('/create', data).then(function (response) {
+            if (!response.data.valid) {
+                console.log('error: invalid username or password')
+            } else {
+                window.location = response.data.redirect;
+            }
+        });
+    }
 </script>

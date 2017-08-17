@@ -21,7 +21,7 @@ router.get('/', function(req, res, next){
     }).then(function(results){
         console.log(results);
     });
-    res.render('newCalendar.hbs', calendarData);
+    res.render('newCalendar.hbs');
 });
 
 // router.get('/join/:calendarID', function(req, res, next){
