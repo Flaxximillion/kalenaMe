@@ -7,7 +7,8 @@
         <br>
         <button class="btn" type="button" name="button" id="signUp">SIGN UP</button>
     </div>
-    <form class="logInForm" id="login" onSubmit="return login()">
+
+    <form class="logInForm" id="login" onsubmit="return login()">
         <img class="logoAlone" src="../assets/kalenaLogoAlone.png">
         <h1>LOG IN</h1>
         <div class="loginInputs">
@@ -20,25 +21,34 @@
                 <input type="password" name="password" class="form-control" id="logInPassword">
             </div>
         </div>
-        <button type="submit" class="btn btn-primary" id="loginSubmit">Submit</button>
+        <button type="submit" class="btn btn-primary" id="logInSubmit">Submit</button>
     </form>
+
     <form class="signUpForm" id="createUser" onsubmit="return createUser()">
-        <div>
-            <label for="signinInputFirstName">First Name</label>
-            <input type="text" name="firstName" class="form-control" id="signInFirstName" placeholder="Enter email">
+        <img class="logoAlone" src="../assets/kalenaLogoAlone.png">
+        <h1>SIGN UP</h1>
+        <div id="firstName">
+            <label for="signinInputFirstName">First Name</label><br>
+            <input type="text" name="firstName" class="form-control" id="signUpFirstName">
+        </div>
+        <div id="lastName">
+            <label for="signinInputLastName">Last Name</label><br>
+            <input type="text" name="lastName" class="form-control" id="signUpLastName">
         </div>
         <div>
-            <label for="signinInputLastName">Last Name</label>
-            <input type="text" name="lastName" class="form-control" id="signInLastName" placeholder="Enter email">
-        </div>
-        <div>
-            <label for="signinInputEmail">Email address</label>
-            <input type="email" name="email" class="form-control" id="signInEmail" placeholder="Enter email">
+            <label for="signinInputEmail">Email address</label><br>
+            <input type="email" name="email" class="form-control" id="signUpEmail">
         </div>
         <div class="form-group">
-            <label for="signinInputPassword">Password</label>
-            <input type="password" name="password" class="form-control" id="signInPassword" placeholder="Password">
+            <label for="signinInputPassword">Password</label><br>
+            <input type="password" name="password" class="form-control" id="signUpPassword">
         </div>
+        <div>
+        </div>
+        <!--<div>-->
+        <!--<label for="signinInputPhone">Phone Number</label>-->
+        <!--<input type="tel" name="phone" class="form-control" id="signInName" placeholder="Enter email">-->
+        <!--</div>-->
         <button type="submit" class="btn btn-primary" id="signInSubmit">Submit</button>
     </form>
 </div>

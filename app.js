@@ -20,6 +20,7 @@ var UserDB = passportLocalSequelize.defineUser(models.sequelize, {
     usernameField: "email"
 });
 
+
 var index = require('./routes/index');
 var userRoute = require('./routes/userRoute');
 var calendarRoute = require('./routes/calendarRoute');
@@ -66,7 +67,9 @@ app.use(session({
     store: store
 }));
 
-store.sync();
+store.sync({
+    force: true
+});
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'express-handlebars');

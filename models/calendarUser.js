@@ -22,8 +22,17 @@ module.exports = function (sequelize, DataTypes) {
             validate: {
                 notEmpty: true
             }
+        },
+        isOwner: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+            validate: {
+                notEmpty: true
+            }
         }
     }, {timestamps: false});
+
+    
 
     return CalendarUser;
 };

@@ -1,95 +1,119 @@
-<h2>Create new calendar</h2>
+<div class="newCalendarContainer">
+    <form>
+        <div>
+            <label for="calendarName">Name of calendar:</label>
+            <input type="text" name="calendarName" class="form-control" id="calendarName" required>
+        </div>
 
-<form>
-  <div>
-    <label for="calendarName">Name of calendar:</label>
-    <input type="text" name="calendarName" class="form-control" id="calendarName" required>
-  </div>
+        <div>
+            <label for="calendarDescription">Description of calendar:</label>
+            <textarea rows="3" cols="40" name="calendarDescription" class="form-control"
+                      id="calendarDescription"></textarea>
+        </div>
 
-  <div>
-    <label for="calendarDescription">Description of calendar:</label>
-    <textarea rows="3" cols="40" name="calendarDescription" class="form-control" id="calendarDescription"></textarea>
-  </div>
+        <h2>Invite members</h2>
+        <div id="userRows">
+            <label for="email0">Email</label>
+            <input type="email" name="inviteEmail" class="form-control" id="email0" placeholder="email@address.com"
+                   required>
+            <!-- <label class="pwd">Name</label>
+           <input type="name" class="form-control" id="name0" placeholder="Full Name" required> -->
+        </div>
+        <div>
+            <button type="button" id="addAnother">+ Add another</button>
+        </div>
+        <div>
+            <button type="submit" id="gotoCalendar">Go to calendar</button>
+        </div>
+    </form>
+</div>
 
-  <h2>Invite members</h2>
-  <div id="userRows">
-    <label for="email0">Email</label>
-    <input type="email" name="inviteEmail" class="form-control" id="email0" placeholder="email@address.com" required>
-    <!-- <label class="pwd">Name</label>
-   <input type="name" class="form-control" id="name0" placeholder="Full Name" required> -->
-  </div>
-  <div>
-    <button type="button" id="addAnother">+ Add another</button>
-  </div>
-  <div>
-    <button type="submit" id="gotoCalendar">Go to calendar</button>
-  </div>
-</form>
+<h1>Your Calendars</h1>
+{{#each cal}}
+    <div class="currentCalendars" id="{{id}}">
+        <h2>Name: {{name}}</h2>
+        <h3>Description: {{this.description}}</h3>
+        <p>Owner: {{this.isOwner}}</p>
+        <hr>
+    </div>
+{{/each}}
+
+<h1>Pending Calendars</h1>
+
+{{#each uncal}}
+    <div class="pendingCalendars" id="{{id}}">
+        <h2>Name: {{name}}</h2>
+        <h3>Description: {{description}}</h3>
+        <hr>
+    </div>
+{{/each}}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.js"></script>
 
 <script type="text/javascript">
 
-	// Globals
-	var calendar = {
-		calendarName: "",
-		calendarDescription: "",
-		users: []
-	};
-	var userCounter = 0;
+    // Globals
+    var calendar = {
+        calendarName: "",
+        calendarDescription: "",
+        users: []
+    };
+    var userCounter = 0;
 
-	$(document).ready(function() {
+    $(document).ready(function () {
 
-		$("#addAnother").on("click", function() {
-			// console.log($("#name"+userCounter).val());
-			console.log($("#email" + userCounter).val());
+        $("#addAnother").on("click", function () {
+            // console.log($("#name"+userCounter).val());
+            console.log($("#email" + userCounter).val());
 
-			userCounter++;
-			console.log("userCounter = " + userCounter);
+            userCounter++;
+            console.log("userCounter = " + userCounter);
 
-			$("#userRows").append('<div><label for="email' + userCounter + '"">Email</label><input name="inviteEmail" type="email" class="form-control" id="email' + userCounter + '" placeholder="email@address.com" required></div>');
-		});
+            $("#userRows").append('<div><label for="email' + userCounter + '"">Email</label><input name="inviteEmail" type="email" class="form-control" id="email' + userCounter + '" placeholder="email@address.com" required></div>');
+        });
 
-		$("#gotoCalendar").on("click", function(e) {
-			e.preventDefault();
+        $("#gotoCalendar").on("click", function (e) {
+            e.preventDefault();
 
-			if ( $("#calendarName").val() ) {
-				calendar.calendarName = $("#calendarName").val().trim();
-			}
+            if ($("#calendarName").val()) {
+                calendar.calendarName = $("#calendarName").val().trim();
+            }
 
-			if ( $("#calendarDescription").val() ) {
-				calendar.calendarDescription = $("#calendarDescription").val().trim();
-			}
+            if ($("#calendarDescription").val()) {
+                calendar.calendarDescription = $("#calendarDescription").val().trim();
+            }
 
-			// Go to calendar button was clicked, do this stuff...
-			for (var i = 0; i <= userCounter; i++) {
-			    console.log(i);
+            // Go to calendar button was clicked, do this stuff...
+            for (var i = 0; i <= userCounter; i++) {
+                console.log(i);
 
-			if ($("#email" + i).val() !== "") {
-					calendar.users.push($("#email" + i).val().trim());
-				}
-			}
-			console.log(calendar);
+                if ($("#email" + i).val() !== "") {
+                    calendar.users.push($("#email" + i).val().trim());
+                }
+            }
+            console.log(calendar);
 
             axios.post('/calendar', calendar).then(function (response) {
                 console.log(response);
             });
 
-			// Our $.ajax/$.post call will go here
-			// ...
-			// The API route should INSERT calendar object into db
-			// ...
-			// Put the remaining code below in the callback for the $ajax call
+            // Our $.ajax/$.post call will go here
+            // ...
+            // The API route should INSERT calendar object into db
+            // ...
+            // Put the remaining code below in the callback for the $ajax call
 
-			// Clear out our globals
-			calendar = {
-				calendarName: "",
-				calendarDescription: "",
-				users: []
-			};
-			userCounter = 0;
-		});
+            // Clear out our globals
+            calendar = {
+                calendarName: "",
+                calendarDescription: "",
+                users: []
+            };
+            userCounter = 0;
 
-	});
+            $('input, textarea').val('');
+        });
+    });
+
 </script>
