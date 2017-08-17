@@ -18,15 +18,21 @@ function addNewTask() {
     event.preventDefault();
 
     var newTask = {};
+
     newTask.taskName = $("#taskName").val().trim();
+
     newTask.taskDate = $("#taskDate").val().trim();
+    console.log(newTask.taskDate);
+
     newTask.taskDescription = $("#taskDescription").val().trim();
-    // This is fake data for now, will eventually come from session variable
+
+    // This needs to come from session data... no idea how to get that
     newTask.taskRequester = 5;
-    newTask.taskCalendar = 1;
+    // Coming from calendar.hbs
+    newTask.taskCalendar = calendarID;
+    // It's a new task, no one has accepted it yet
     newTask.taskAccepted = false;
 
-    console.log(newTask.taskDate);
 
     $.ajax({
         url: '/task/new',

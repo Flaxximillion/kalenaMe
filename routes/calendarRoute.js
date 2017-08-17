@@ -7,11 +7,11 @@ var bodyParser = require('body-parser');
 var randomString = require('randomstring');
 var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({extended: false});
-
-router.get('/', function(req, res){
-    console.log(req.session);
-    res.render('newCalendar.hbs');
-});
+//
+// router.get('/', function(req, res){
+//     console.log(req.session);
+//     res.render('newCalendar.hbs');
+// });
 
 var resultCouter = 0;
 
@@ -157,6 +157,20 @@ var updateCalUserTable = function(passback, cb){
 
 //===================[GET/POST]===================
 
+router.get('/:id', function (req, res, next) {
+      //return specific calendar
+      models.calendar.findOne({
+          where: {
+              id: req.params.id,
+          }
+      }).then(function (calData) {
+        console.log(calData);
+        res.render("calendar.hbs", {layout: "calendar.hbs", data: calData});
+      }).catch(function (err) {
+          catchErr(err);
+      });
+});
+
 //get all calendars
 router.get('/api/:id', function (req, res, next) {
     if (req.params.id === "all") {
@@ -175,25 +189,14 @@ router.get('/api/:id', function (req, res, next) {
                 calendarName: req.params.calendarName
             }
         }).then(function (dbUser) {
-            res.json(dbUser)
+            res.json(dbUser);
         }).catch(function () {
             catchErr(err);
         });
     }
 });
 
-router.get('/:id', function (req, res, next) {
-      //return specific user
-      models.calendar.findOne({
-          where: {
-              id: req.params.id,
-          }
-      }).then(function (calData) {
-          res.render("calendar.hbs", {layout: "calendar.hbs", data: calData});
-      }).catch(function (err) {
-          catchErr(err);
-      });
-});
+
 
 
 router.post('/api/calendar', jsonParser, function(req, res, next){
