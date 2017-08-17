@@ -1,5 +1,9 @@
 module.exports = function (sequelize, DataTypes) {
     var Calendar = sequelize.define("calendar", {
+        calendarId: {
+            type: DataTypes.STRING,
+            primaryKey: true
+        },
         calendarName: {
             type: DataTypes.STRING,
             validate: {
@@ -12,9 +16,6 @@ module.exports = function (sequelize, DataTypes) {
         },
         calendarOwner: {
             type: DataTypes.STRING
-            // validate: {
-            //     notEmpty: true
-            // }
         }
     }, {
         timestamps: false

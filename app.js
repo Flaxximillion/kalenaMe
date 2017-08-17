@@ -9,14 +9,17 @@ var passport = require('passport');
 var session = require('express-session');
 var SequelizeStore = require('connect-session-sequelize')(session.Store);
 var passportLocalSequelize = require('passport-local-sequelize');
+var uuid = require('uuid/v4');
 
 var UserDB = passportLocalSequelize.defineUser(models.sequelize, {
     firstName: models.Sequelize.STRING,
     lastName: models.Sequelize.STRING,
+    uuid: models.Sequelize.STRING,
     email: models.Sequelize.STRING
 }, {
     usernameField: "email"
 });
+
 
 var index = require('./routes/index');
 var userRoute = require('./routes/userRoute');
@@ -31,6 +34,7 @@ var Session = models.sequelize.define('Sessions', {
         type: models.Sequelize.STRING,
         primaryKey: true
     },
+    email: models.Sequelize.STRING,
     userId: models.Sequelize.STRING,
     expires: models.Sequelize.DATE,
     data: models.Sequelize.STRING(50000)
@@ -40,7 +44,8 @@ function extendDefaultFields(defaults, session) {
     return {
         data: defaults.data,
         expires: defaults.expires,
-        userId: session.username
+        userId: session.uuid,
+        email: session.email
     };
 }
 
@@ -58,11 +63,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     secret: 'super secret session key please do not do a leak',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: store
 }));
 
-store.sync();
+store.sync({
+    force: true
+});
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'express-handlebars');
@@ -79,7 +86,8 @@ app.post('/login', function(req, res, next){
             {
                 valid: false
             });
-        req.session.username = user.dataValues.username;
+        req.session.uuid = user.dataValues.uuid;
+        req.session.email = user.dataValues.email;
         res.send(
             {
                 valid: true,
@@ -90,19 +98,28 @@ app.post('/login', function(req, res, next){
 
 app.post('/create', function (req, res) {
     var newUser = {
+        uuid: uuid(),
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
-        username: req.body.username
+        username: req.body.firstName + req.body.lastName
     };
     UserDB.register(newUser, req.body.password, function (err, result) {
-        console.log(err, res);
-        res.send(result);
+        if(err) res.send({
+            valid: false,
+            redirect: '/'
+        });
+        req.session.uuid = result.dataValues.uuid;
+        req.session.email = result.dataValues.email;
+        res.send({
+            valid: true,
+            redirect: '/calendar'
+        });
     });
 });
 
 app.get('/logout', function (req, res) {
-    req.logout();
+    req.session.destroy();
     res.send('loggedout');
 });
 

@@ -1,0 +1,23 @@
+<h3>Your Calendars</h3>
+
+<div id="small-content-placeholder"></div>
+
+<script id="small-template" type="text/x-handlebars-template">
+  <table>
+      <thead>
+          <th>Username</th>
+          <th>email</th>
+      </thead>
+      <tbody>
+          {{#data}}
+              <tr>
+                  <td>{{username}}
+                  </td>
+                  <td>{{email}}</td>
+              </tr>
+          {{/data}}
+      </tbody>
+  </table>
+
+
+</script>
