@@ -9,7 +9,7 @@ module.exports = function (sequelize, DataTypes) {
       taskDescription: DataTypes.TEXT,
       taskAccepted: {
         type: DataTypes.BOOLEAN,
-        default: false,
+        default: false
       },
       taskRequester: {
         type: DataTypes.STRING

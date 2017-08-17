@@ -25,10 +25,38 @@ app.set('port', port);
  */
 var server = http.createServer(app);
 
-models.sequelize.sync().then(function() {
+models.sequelize.sync({
+    //force: true
+}).then(function() {
     /**
      * Listen on provided port, on all network interfaces.
      */
+
+    models.sequelize.models.User.hasMany(models.calendarUser, {
+        foreignKey: {
+            name: 'calendarUserUUID'
+        }
+    });
+
+    models.calendarUser.belongsTo(models.sequelize.models.User, {
+        foreignKey: {
+            name: 'calendarUserUUID'
+        },
+        as: 'calendarUsers'
+    });
+
+    models.calendarUser.belongsTo(models.calendar, {
+        foreignKey: {
+            name: 'calendarID'
+        },
+        as: 'calendars'
+    });
+
+    models.calendar.hasMany(models.calendarUser, {
+        foreignKey: {
+            name: 'calendarID'
+        }
+    });
 
     server.listen(port, function() {
         console.log("server up");
