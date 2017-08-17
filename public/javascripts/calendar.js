@@ -1,85 +1,114 @@
 // Note that FullCalendar expects a certain format for events (tasks)
 // Additional fields (e.g. description) can be added if desired
 // See: https://fullcalendar.io/docs/event_data/Event_Source_Object/
-// TODO: Populate the tasks object with real data from db
-var tasks = {
-  events: [
-  {
-    title: "This is a claimed task",
-    start: "2017-08-01T12:00:00",
-    claimed: true,
-    description: "This is a longer description of the task.",
-    backgroundColor: "green",
-    borderColor: "green"
-  },
-  {
-    title: "This is another claimed task",
-    start: "2017-08-01T14:00:00",
-    claimed: true,
-    description: "This is a longer description of the task.",
-    backgroundColor: "green",
-    borderColor: "green"
-  },
-  {
-    title: "An unclaimed task here",
-    start: "2017-08-17T10:00:00",
-    claimed: false,
-    description: "This is a longer description of the second task.",
-    backgroundColor: "red",
-    borderColor: "red"
-  }],
-  className: "task" // adds class to all events
-};
 
-function addNewTask(data) {
-  // TODO: Trigger a modal for inputing a new task
-  console.log("The date that was clicked: " + $(data).data().date);
+function addNewTask() {
+  $(".modal").show();
+  $(".modal").animate({
+    "opacity": 100
+  }, "fast");
+
+  $(".modal .modalContent").html('\
+          <form>Task Name:<br><input type="text" id="taskName" required><br>\
+          Task Date and Time:<br><input type="datetime-local"  id="taskDate" required><br>\
+          Task Description:<br><textarea class="form-control" rows="3" id="taskDescription"></textarea><br><br>\
+          <input type="submit" value="Submit" id="submit">\
+          </form>');
+  $(".modal #submit").on("click", document, function(event) {
+    event.preventDefault();
+
+    var newTask = {};
+    newTask.taskName = $("#taskName").val().trim();
+    newTask.taskDate = $("#taskDate").val().trim();
+    newTask.taskDescription = $("#taskDescription").val().trim();
+    // This is fake data for now, will eventually come from session variable
+    newTask.taskRequester = 5;
+    newTask.taskCalendar = 1;
+    newTask.taskAccepted = false;
+
+    console.log(newTask.taskDate);
+
+    $.ajax({
+        url: '/task/new',
+        method: "POST",
+        data: newTask,
+        xhrFields: {
+          withCredentials: true
+        }
+      })
+      .done(function(response) {
+        console.log(response);
+        // callback
+        closeModal(true);
+      });
+    });
 }
+
+function closeModal(reloadPage) {
+  // When close button is clicked, animate opacity to 0
+  if (reloadPage) {
+    location.reload(true);
+  } else {
+    $(".modal").animate({
+      "opacity": 0
+    }, "fast", function() {
+      console.log("Animation complete");
+      $(".modal").hide();
+    });
+  }
+}
+
+function fetchTasks() {
+  $.get("/task")
+    .done(function(tasks) {
+      console.log("AJAX data received");
+      $("#calendar").fullCalendar({
+        // OPTIONS
+        events: tasks,
+        header: {
+          left: 'title',
+          center: 'basicDay,basicWeek,month',
+          right: 'today prev,next'
+        },
+        // CALLBACK EVENTS
+        // After calendar is rendered, before other events are triggered
+        viewRender: function() {
+          console.log("Calendar rendered");
+        },
+        // When an event is clicked
+        eventClick: function(task) {
+          showTask(task);
+        },
+        // When a day is clicked
+        dayClick: function(day) {
+          addNewTask(day);
+        }
+      }); // fullCalendar
+    });
+}
+
 
 function showTask(task) {
   // TODO: Trigger a modal for showing task details
-  $("#taskDetails .modalContent").html("<h2>"+task.title+"</h2>");
-  $("#taskDetails .modalContent").append("<p>"+task.description+"</p>");
+  $(".modal .modalContent").html("<h2>" + task.title + "</h2>");
+  $(".modal .modalContent").append("<p>" + task.description + "</p>");
   if (task.claimed) {
-    $("#taskDetails .modalContent").append("<p>This task has been claimed by XXX</p>");
+    $(".modal .claimStatus").html("<p>This task has been claimed by XXX</p>");
   } else {
-    $("#taskDetails .modalContent").append("<p>This has <strong>not</strong> been claimed.</p>");
-    $("#taskDetails .modalContent").append("<button type='button'>Claim it!</button>");
+    $(".modal .claimStatus").html("<p>This has <strong>not</strong> been claimed.</p>");
+    $(".modal .claimStatus").append("<button class='claim' data-id='" + task.id + "' type='button'>Claim it!</button>");
   }
-  $("#taskDetails").show();
-  $("#taskDetails").animate({
+  $(".modal").show();
+  $(".modal").animate({
     "opacity": 100,
   }, "fast");
-  console.log(task.title);
-  console.log(task.description);
-  console.log("Task claimed? " + task.claimed);
 }
 
 $(document).ready(function() {
-  // Note, we should call fullCalendar() *after* we get data back from server,
-  // i.e. as a callback on our forthcoming $.get()
-  $("#calendar").fullCalendar({
-    // OPTIONS
-    events: tasks,
-    header: {
-      left:   'title',
-      center: 'basicDay,basicWeek,month',
-      right:  'today prev,next'
-    },
-    // CALLBACK EVENTS
-    // After calendar is rendered, before other events are triggered
-    viewRender: function() {
-      console.log("Calendar rendered");
-    },
-    // When an event is clicked
-    eventClick: function(task) {
-      showTask(task);
-    },
-    // When a day is clicked
-    dayClick: function(day) {
-      addNewTask(day);
-    }
-  }); // fullCalendar
+
+  $("#h1").hide();
+
+  fetchTasks();
 
   // Sidebar
   var sidebarOpen = true;
@@ -106,19 +135,25 @@ $(document).ready(function() {
   });
 
   // Modals
-  
-  $(".modal .close").on("click", document, function () {
-    // When close button is clicked, animate opacity to 0
-    $(".modal").animate({
-      "opacity": 0
-    },
-    // animation speed
-    "fast",
-    // animation complete callback
-    function () {
-      console.log("Animation complete");
-      $(".modal").css("display", "none");
+  $(".modal .close").on("click", document, function() {
+    closeModal();
+  });
+
+  $(document).on("click", "button.claim", function(elem) {
+    var taskID = $(elem.target).data("id");
+    // console.log("taskID: "+taskID);
+    var updateData = {
+      taskAccepted: 1,
+      // Hard-coded, eventually will be from session data of logged in user
+      taskAccepter: 5
+    };
+    $.post("/task/update/" + taskID, updateData, function(response) {
+      console.log(response);
+      closeModal(true);
     });
   });
 
+  $("#addtask").on("click", document, function() {
+    addNewTask();
+  });
 });
