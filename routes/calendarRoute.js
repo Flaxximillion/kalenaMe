@@ -13,6 +13,7 @@ var urlencodedParser = bodyParser.urlencoded({extended: false});
 //     res.render('newCalendar.hbs');
 // });
 
+
 var resultCouter = 0;
 
 //===================[function]===================
