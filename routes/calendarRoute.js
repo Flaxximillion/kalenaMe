@@ -171,11 +171,11 @@ router.get('/api/:id', function (req, res, next) {
         //return specific user
         models.calendar.findOne({
             where: {
-                calendarID: req.params.calendarID,
-                calendarName: req.params.calendarName
+                id: req.params.id,
             }
         }).then(function (dbUser) {
-            res.json(dbUser)
+            //res.json(dbUser)
+            res.render("calendar", dbUser);
         }).catch(function () {
             catchErr(err);
         });
