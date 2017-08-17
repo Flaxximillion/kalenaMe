@@ -124,7 +124,6 @@ router.get('/join/:id', function (req, res, next) {
 });
 
 router.get('/join/:calendarID', function (req, res, next) {
-    console.log(req.params, "thing");
     models.calendar.findOne({
         where: {
             calendarId: req.params.calendarID
@@ -134,35 +133,41 @@ router.get('/join/:calendarID', function (req, res, next) {
         raw: true
     }).then(function (result) {
         console.log(result);
+
+        models.calendarUser.findAll({
+            where: {
+                verified: true,
+                calendarID: req.params.calendarID
+            },
+            attributes: {
+                exclude: ['id', 'calendarUserEmail', 'calendarID', 'verified', 'isOwner']
+            },
+            raw: true
+        }).then(function (calendarUsers) {
+            var queryFor = calendarUsers.map(function(uuid){
+                return {uuid: uuid.calendarUserUUID};
+            });
+
+            models.sequelize.models.User.findAll({
+                where: {
+                    $or: queryFor
+                },
+                attributes: {
+                    exclude: ['uuid', 'id', 'username', 'hash', 'salt', 'activationKey', 'resetPasswordKey', 'verified', 'createdAt', 'updatedAt']
+                },
+                raw: true
+            }).then(function(users){
+                console.log(users);
+            })
+        });
     });
 
 
-    models.calendarUser.findAll({
-        where: {
-            verified: true,
-            calendarID: req.params.calendarID
-        },
-        attributes: {
-            exclude: ['id', 'calendarUserEmail', 'calendarID', 'verified', 'isOwner']
-        },
-        raw: true
-    }).then(function (calendarUsers) {
-        var queryFor = calendarUsers.map(function(uuid){
-            return {uuid: uuid.calendarUserUUID};
-        });
-        console.log(queryFor);
 
-        models.sequelize.models.User.findAll({
-            where: {
-                $or: queryFor
-            },
-            attributes: {
-                exclude: ['uuid', 'id', 'username', 'hash', 'salt', 'activationKey', 'resetPasswordKey', 'verified', 'createdAt', 'updatedAt']
-            },
-            raw: true
-        }).then(function(users){
-            console.log(users);
-        })
+    res.render('file', {
+        calendarInfo: calendar,
+        users: users,
+        task: task
     })
 });
 
