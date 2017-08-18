@@ -124,7 +124,7 @@ function showTask(task) {
     $(".modal .modalContent").append("<p>" + task.description + "</p>");
     $(".modal .modalContent").append("<p>Created by: " + task.taskCreator + "</p>");
     if (task.claimed) {
-        $(".modal .claimStatus").html("<p>This task has been claimed by "+ task.claimUser+"</p>");
+        $(".modal .claimStatus").html("<p>This task has been claimed by " + task.claimUser + "</p>");
     } else {
         $(".modal .claimStatus").html("<p>This has <strong>not</strong> been claimed.</p>");
         $(".modal .claimStatus").append("<button class='claim' data-id='" + task.id + "' type='button'>Claim it!</button>");
@@ -136,6 +136,23 @@ function showTask(task) {
 }
 
 $(document).ready(function () {
+
+    $("#inviteUser").click(function(event){
+        $(".invite").toggle();
+    });
+
+    $("#sendInvite").click(function(event){
+       if($("#inviteEmail").val()!==""){
+           var inviteData = {
+               calendarID: $("body").attr('id'),
+               email: $("#inviteEmail").val().trim()
+           };
+           $.post("/calendar/invite/" + $("body").attr('id'), inviteData, function (response) {
+               console.log(response);
+               $(".invite").toggle();
+           });
+       }
+    });
 
     $("#h1").hide();
 

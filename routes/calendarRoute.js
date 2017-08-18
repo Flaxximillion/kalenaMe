@@ -52,6 +52,16 @@ router.post('/', function (req, res, next) {
     })
 });
 
+router.post('/invite/:calendarID', function(req, res){
+    models.calendarUser.create({
+        calendarUserEmail: req.body.email,
+        calendarID: req.body.calendarID
+    }).then(function(invite){
+        console.log(invite);
+        res.send('addedInvite');
+    })
+});
+
 router.get('/', function (req, res, next) {
     var cal = [];
     var uncal = [];
