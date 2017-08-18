@@ -1,12 +1,38 @@
+<div class="usersCalendarsContainer">
+  <h1>Your Calendars</h1>
+  <div class="yesCal">
+    {{#each cal}}
+        <div class="currentCalendars hvr-bounce-in" id="{{id}}">
+            <h2>{{name}}</h2>
+            <h3>{{this.description}}</h3>
+            <p>Owner: {{this.isOwner}}</p>
+            <!-- <hr> -->
+        </div>
+    {{/each}}
+  </div>
+
+  <h1>Pending Calendars</h1>
+  <div class="pendCal">
+    {{#each uncal}}
+        <div class="pendingCalendars hvr-bounce-in" id="{{id}}">
+            <h2>{{name}}</h2>
+            <h3>{{description}}</h3>
+        </div>
+    {{/each}}
+  </div>
+  <button type="button" name="button" id="addCal"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></button>
+</div>
+
 <div class="newCalendarContainer">
+  <h1>New Calendar</h1>
     <form>
         <div>
-            <label for="calendarName">Name of calendar:</label>
+            <label for="calendarName">Name of calendar:</label><br>
             <input type="text" name="calendarName" class="form-control" id="calendarName" required>
         </div>
 
         <div>
-            <label for="calendarDescription">Description of calendar:</label>
+            <label for="calendarDescription">Description of calendar:</label><br>
             <textarea rows="3" cols="40" name="calendarDescription" class="form-control"
                       id="calendarDescription"></textarea>
         </div>
@@ -20,7 +46,7 @@
            <input type="name" class="form-control" id="name0" placeholder="Full Name" required> -->
         </div>
         <div>
-            <button type="button" id="addAnother">+ Add another</button>
+            <button type="button" id="addAnother">+ Add </button>
         </div>
         <div>
             <button type="submit" id="gotoCalendar">Go to calendar</button>
@@ -28,25 +54,6 @@
     </form>
 </div>
 
-<h1>Your Calendars</h1>
-{{#each cal}}
-    <div class="currentCalendars" id="{{id}}">
-        <h2>Name: {{name}}</h2>
-        <h3>Description: {{this.description}}</h3>
-        <p>Owner: {{this.isOwner}}</p>
-        <hr>
-    </div>
-{{/each}}
-
-<h1>Pending Calendars</h1>
-
-{{#each uncal}}
-    <div class="pendingCalendars" id="{{id}}">
-        <h2>Name: {{name}}</h2>
-        <h3>Description: {{description}}</h3>
-        <hr>
-    </div>
-{{/each}}
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.js"></script>
@@ -62,6 +69,8 @@
     var userCounter = 0;
 
     $(document).ready(function () {
+
+      $('.newCalendarContainer').hide();
 
         $("#addAnother").on("click", function () {
             // console.log($("#name"+userCounter).val());
@@ -113,6 +122,12 @@
             userCounter = 0;
 
             $('input, textarea').val('');
+
+        });
+
+        $('#addCal').on('click', function(){
+          $('.newCalendarContainer').show();
+          $('.usersCalendarsContainer').hide();
         });
     });
 
