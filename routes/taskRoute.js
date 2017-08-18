@@ -17,7 +17,7 @@ router.get("/", function (req, res, next) {
         "claimed": data[i].dataValues.taskAccepted,
         "description": data[i].dataValues.taskDescription,
         "className": data[i].dataValues.taskAccepted ? "claimed" : "unclaimed",
-        "claimedBy": data[i].dataValues.taskAccepter,
+        "claimedBy": req.session.uuid,
         "id": data[i].dataValues.id
       };
       tasks.events.push(vals);
