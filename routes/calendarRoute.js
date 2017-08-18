@@ -161,14 +161,10 @@ router.get('/join/:calendarID', function (req, res, next) {
             })
         });
     });
+});
 
-
-
-    res.render('file', {
-        calendarInfo: calendar,
-        users: users,
-        task: task
-    })
+router.get('/test', function(req, res){
+   res.render('calendar.hbs');
 });
 
 //displays error if one occurs
