@@ -160,19 +160,13 @@ router.get('/join/:calendarID', function (req, res, next) {
                 raw: true
             }).then(function (users) {
                 console.log(users);
+                res.render("calendar.hbs", {
+                    layout: "calendar.hbs",
+                    meminfo: users,
+                    calinfo: result
+                });
             })
         });
-    });
-});
-
-router.get('/test', function (req, res) {
-    console.log("\n USERS:");
-    console.log(users);
-
-    res.render("calendar.hbs", {
-        layout: "calendar.hbs",
-        meminfo: users,
-        calinfo: result
     });
 });
 
