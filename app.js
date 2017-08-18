@@ -119,7 +119,7 @@ app.post('/create', function (req, res) {
 
 app.get('/logout', function (req, res) {
     req.session.destroy();
-    res.send('loggedout');
+    res.redirect('/');
 });
 
 app.use('/', index);
