@@ -43,8 +43,6 @@ function addNewTask() {
 
         newTask.taskDescription = $("#taskDescription").val().trim();
 
-        // This needs to come from session data... no idea how to get that
-        //newTask.taskRequester = 5;
         // Coming from calendar.hbs
         newTask.taskCalendar = $('body').attr('id');
         // It's a new task, no one has accepted it yet
@@ -124,8 +122,9 @@ function showTask(task) {
     // TODO: Trigger a modal for showing task details
     $(".modal .modalContent").html("<h2>" + task.title + "</h2>");
     $(".modal .modalContent").append("<p>" + task.description + "</p>");
+    $(".modal .modalContent").append("<p>Created by: " + task.taskCreator + "</p>");
     if (task.claimed) {
-        $(".modal .claimStatus").html("<p>This task has been claimed by XXX</p>");
+        $(".modal .claimStatus").html("<p>This task has been claimed by "+ task.claimUser+"</p>");
     } else {
         $(".modal .claimStatus").html("<p>This has <strong>not</strong> been claimed.</p>");
         $(".modal .claimStatus").append("<button class='claim' data-id='" + task.id + "' type='button'>Claim it!</button>");
