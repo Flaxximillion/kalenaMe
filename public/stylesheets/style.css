@@ -68,6 +68,33 @@ form {
   padding: 25px;
 }
 
+h1 {
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+}
+
+h2 {
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+}
+
+h3 {
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  font-weight: 100;
+}
+
+textarea {
+  border: none;
+  border-bottom: 1px solid #3d3f33;
+  width: 300px;
+  font-family: "Roboto";
+  font-weight: 100;
+  color: #3d3f33;
+  font-size: 14px;
+  margin-bottom: 10px;
+  padding: 10px 0 0 0;
+}
+
 
 
 
@@ -176,10 +203,9 @@ form {
 /* New Calendar styling
 ================================================================================*/
 
-.containerNewCal {
+.usersCalendarsContainer {
   margin: 0 auto;
   padding: 20px;
-  /*margin-top: 3.2%;*/
   position: relative;
   height: 500px;
   width: 900px;
@@ -187,4 +213,122 @@ form {
   align-items: center;
   align-self: center;
   align-content: center;
+}
+
+.currentCalendars {
+  margin: 20px;
+  padding: 20px;
+  position: relative;
+  width: 30%;
+  background-color: #cccccc;
+  height: 100px;
+  color: white;
+  transition: 0.5s;
+  cursor:pointer;
+}
+
+.currentCalendars:hover {
+  background-color: #FA6E59;
+}
+
+.pendingCalendars {
+  margin: 20px;
+  padding: 20px;
+  position: relative;
+  width: 30%;
+  background-color: #cccccc;
+  height: 30px;
+  color: white;
+  transition: 0.5s;
+  cursor:pointer;
+  display: flex;
+  flex-flow: row;
+}
+
+.currentCalendars:hover {
+  background-color: #FA6E59;
+}
+
+.pendingCalendars:hover {
+  background-color:  #4897D8;
+}
+
+.yesCal, .pendCal {
+  display: flex;
+  flex-direction: row;
+}
+
+.usersCalendarsContainer h1 {
+  font-weight: 300;
+  display: flex;
+  justify-content: center;
+}
+
+.usersCalendarsContainer h1,h2 {
+  text-transform: uppercase;
+}
+
+.hvr-bounce-in {
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(0.5px) translateZ(0);
+  box-shadow: 0 0 1px transparent;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+}
+.hvr-bounce-in:hover, .hvr-bounce-in:focus, .hvr-bounce-in:active {
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+  -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+  transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+}
+
+#addCal {
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  font-size: 30px;
+}
+
+.newCalendarContainer {
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  height: 500px;
+  width: 900px;
+  background-color: white;
+  align-items: center;
+  align-self: center;
+  align-content: center;
+}
+
+.newCalendarContainer h1 {
+  font-size: 40px;
+  font-weight: 250;
+  display: flex;
+  justify-content: center;
+}
+
+.newCalendarContainer h2 {
+  font-weight: 200;
+  display: flex;
+  justify-content: center;
+}
+
+.newCalendarContainer h1,h2 {
+  text-transform: uppercase;
+}
+
+#addAnother {
+  margin: 20px 20px 20px 0px;
+  font-size: 12px;
+}
+
+#gotoCalendar {
+  font-size: 20px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
 }
