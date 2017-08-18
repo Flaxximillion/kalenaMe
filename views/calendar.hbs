@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>CALENDAR NAME: {{data.calendarName}}</title>
+  <title>CALENDAR NAME: {{calinfo.calendarName}}</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
   <link rel="stylesheet" href="/stylesheets/style.css" >
@@ -122,13 +122,13 @@
     <!-- <button id="close"> &times;</button> -->
     <h3>Members</h3>
     <ul>
-      <li>{{data.calendarOwner}}</li>
-      <li><a href="#">Ada Lovelace</a> <span class="admin">(admin)</span></li>
-      <li><a href="#">Charles Babbage</a></li>
-      <li><a href="#">Edith Clarke</a></li>
-      <li><a href="#">Grace Hopper</a></li>
-      <li><a href="#">Radia Perlman</a></li>
-      <li><a href="#">Steve Wozniak</a></li>
+      {{#each meminfo}}
+        {{#if @first}}
+          <li><a href="#">{{this.firstName}}</a><span class="admin"> (admin)</span></li>
+        {{else}}
+          <li><a href="#">{{this.firstName}}</a></li>
+        {{/if}}
+      {{/each}}
     </ul>
 
     <button id="addtask">Add task</button>
@@ -149,7 +149,7 @@
   </div>
 
   <script type="text/javascript">
-    var calendarID = {{data.id}};
+    var calendarID = {{calinfo.id}};
   </script>
 
   <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>

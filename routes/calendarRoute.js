@@ -14,7 +14,7 @@ function loggedIn(req, res, next) {
         } else {
             res.redirect('/');
         }
-    }); 
+    });
 }
 
 router.all('*', loggedIn, function (req, res, next) {
@@ -74,8 +74,8 @@ router.get('/', function (req, res, next) {
         },
         raw: true
     }).then(function (results) {
-        for(var i = 0; i < results.length; i++){
-            if(results[i].verified){
+        for (var i = 0; i < results.length; i++) {
+            if (results[i].verified) {
                 cal.push({
                     isOwner: results[i].isOwner,
                     id: results[i]['calendars.calendarId'],
@@ -129,9 +129,11 @@ router.get('/join/:calendarID', function (req, res, next) {
             calendarId: req.params.calendarID
         },
         attributes: {
-            exclude: ['calendarOwner']},
+            exclude: ['calendarOwner']
+        },
         raw: true
     }).then(function (result) {
+        console.log("\n RESULTS:");
         console.log(result);
 
         models.calendarUser.findAll({
@@ -144,7 +146,7 @@ router.get('/join/:calendarID', function (req, res, next) {
             },
             raw: true
         }).then(function (calendarUsers) {
-            var queryFor = calendarUsers.map(function(uuid){
+            var queryFor = calendarUsers.map(function (uuid) {
                 return {uuid: uuid.calendarUserUUID};
             });
 
@@ -156,16 +158,24 @@ router.get('/join/:calendarID', function (req, res, next) {
                     exclude: ['uuid', 'id', 'username', 'hash', 'salt', 'activationKey', 'resetPasswordKey', 'verified', 'createdAt', 'updatedAt']
                 },
                 raw: true
-            }).then(function(users){
+            }).then(function (users) {
                 console.log(users);
             })
         });
     });
 });
 
-router.get('/test', function(req, res){
-   res.render('calendar.hbs');
+router.get('/test', function (req, res) {
+    console.log("\n USERS:");
+    console.log(users);
+
+    res.render("calendar.hbs", {
+        layout: "calendar.hbs",
+        meminfo: users,
+        calinfo: result
+    });
 });
+
 
 //displays error if one occurs
 function catchErr(err) {
