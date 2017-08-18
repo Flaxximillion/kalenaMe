@@ -125,6 +125,10 @@
 
         });
 
+        $('body').on('click', '.currentCalendars', function(event){
+            window.location = '/calendar/join/' + event.currentTarget.id;
+        });
+
         $('#addCal').on('click', function(){
           $('.newCalendarContainer').show();
           $('.usersCalendarsContainer').hide();
