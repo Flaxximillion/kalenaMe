@@ -14,7 +14,7 @@ function loggedIn(req, res, next) {
         } else {
             res.redirect('/');
         }
-    }); 
+    });
 }
 
 router.all('*', loggedIn, function (req, res, next) {
@@ -133,37 +133,43 @@ router.get('/join/:calendarID', function (req, res, next) {
             exclude: ['calendarOwner']},
         raw: true
     }).then(function (result) {
+        console.log("\n RESULTS:");
         console.log(result);
-    });
 
-
-    models.calendarUser.findAll({
-        where: {
-            verified: true,
-            calendarID: req.params.calendarID
-        },
-        attributes: {
-            exclude: ['id', 'calendarUserEmail', 'calendarID', 'verified', 'isOwner']
-        },
-        raw: true
-    }).then(function (calendarUsers) {
-        var queryFor = calendarUsers.map(function(uuid){
-            return {uuid: uuid.calendarUserUUID};
-        });
-        console.log(queryFor);
-
-        models.sequelize.models.User.findAll({
+        models.calendarUser.findAll({
             where: {
-                $or: queryFor
+                verified: true,
+                calendarID: req.params.calendarID
             },
             attributes: {
-                exclude: ['uuid', 'id', 'username', 'hash', 'salt', 'activationKey', 'resetPasswordKey', 'verified', 'createdAt', 'updatedAt']
+                exclude: ['id', 'calendarUserEmail', 'calendarID', 'verified', 'isOwner']
             },
             raw: true
-        }).then(function(users){
-            console.log(users);
+        }).then(function (calendarUsers) {
+            var queryFor = calendarUsers.map(function(uuid){
+                return {uuid: uuid.calendarUserUUID};
+            });
+
+            models.sequelize.models.User.findAll({
+                where: {
+                    $or: queryFor
+                },
+                attributes: {
+                    exclude: ['uuid', 'id', 'username', 'hash', 'salt', 'activationKey', 'resetPasswordKey', 'verified', 'createdAt', 'updatedAt']
+                },
+                raw: true
+            }).then(function(users){
+                console.log("\n USERS:");
+                console.log(users);
+
+                res.render("calendar.hbs", {
+                  layout: "calendar.hbs",
+                  meminfo: users,
+                  calinfo: result
+                });
+            })
         })
-    })
+    });
 });
 
 //displays error if one occurs
