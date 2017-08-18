@@ -9,11 +9,6 @@ var debug = require('debug')('express-sequelize');
 var http = require('http');
 var models = require('../models');
 
-var uuid = require('uuid/v4');
-
-var session = require('express-session');
-var SequelizeStore = require('connect-session-sequelize')(session.Store);
-
 /**
  * Get port from environment and store in Express.
  */
