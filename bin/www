@@ -32,11 +32,30 @@ models.sequelize.sync({
      * Listen on provided port, on all network interfaces.
      */
 
-    models.sequelize.models.User.hasMany(models.calendarUser, {
-        foreignKey: {
-            name: 'calendarUserUUID'
-        }
+    models.sequelize.models.User.hasMany(models.tasks, {
+        foreignKey: 'taskRequester',
+        as: 'userRequester'
     });
+
+    models.sequelize.models.User.hasMany(models.tasks, {
+        foreignKey: 'taskAccepter',
+        as: 'userAccepter'
+    });
+
+    models.sequelize.sync();
+
+    models.tasks.belongsTo(models.sequelize.models.User, {
+        targetKey: 'uuid',
+        foreignKey: 'taskAccepter',
+        as: 'userAccepter'
+    });
+
+    models.tasks.belongsTo(models.sequelize.models.User, {
+        targetKey: 'uuid',
+        foreignKey: 'taskRequester',
+        as: 'userRequester'
+    });
+
 
     models.calendarUser.belongsTo(models.sequelize.models.User, {
         foreignKey: {
@@ -52,11 +71,19 @@ models.sequelize.sync({
         as: 'calendars'
     });
 
+    models.sequelize.models.User.hasMany(models.calendarUser, {
+        foreignKey: {
+            name: 'calendarUserUUID'
+        }
+    });
+
     models.calendar.hasMany(models.calendarUser, {
         foreignKey: {
             name: 'calendarID'
         }
     });
+
+    models.sequelize.sync();
 
     server.listen(port, function() {
         console.log("server up");
