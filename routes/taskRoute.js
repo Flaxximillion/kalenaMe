@@ -21,7 +21,7 @@ router.get("/:calendarID", function (req, res, next) {
             }
         }],
         attributes: {
-            exclude: ['id', 'createdAt', 'updatedAt']
+            exclude: ['createdAt', 'updatedAt']
         }
     }).then(function (data) {
         console.log(data);
@@ -32,6 +32,7 @@ router.get("/:calendarID", function (req, res, next) {
         for (var i = 0; i < data.length; i++) {
             console.log(data[i].dataValues.userRequester);
             // Create data objects according to format that FullCalendar.io expects
+
             var vals = {
                 "title": data[i].dataValues.taskName,
                 "start": data[i].dataValues.taskDate,
@@ -39,8 +40,16 @@ router.get("/:calendarID", function (req, res, next) {
                 "description": data[i].dataValues.taskDescription,
                 "className": data[i].dataValues.taskAccepted ? "claimed" : "unclaimed",
                 "claimedBy": data[i].dataValues.taskAccepter,
-                "id": data[i].dataValues.id
+                "id": data[i].dataValues.id,
+                "taskCreator": data[i].dataValues.userRequester.firstName + " " + data[i].dataValues.userRequester.lastName,
+
             };
+
+            if(data[i].dataValues.userAccepter === null){
+              vals["claimUser"] = "";
+            } else {
+              vals["claimUser"] = data[i].dataValues.userAccepter.firstName + " " + data[i].dataValues.userAccepter.lastName;
+            }
             tasks.events.push(vals);
         }
         res.json(tasks);
@@ -51,6 +60,8 @@ router.get("/:calendarID", function (req, res, next) {
 });
 
 router.post('/update/:id', function (req, res) {
+  console.log(req.body);
+
     req.body.taskAccepter = req.session.uuid;
     models.tasks.update(
         req.body,
