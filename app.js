@@ -59,6 +59,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
+
+app.use(express.static(path.join(__dirname, 'node_modules/socket.io-client/dist')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     secret: 'super secret session key please do not do a leak',
@@ -66,6 +68,7 @@ app.use(session({
     saveUninitialized: false,
     store: store
 }));
+
 
 store.sync({
     force: true

@@ -128,3 +128,8 @@ function onListening() {
         : 'port ' + addr.port;
     debug('Listening on ' + bind);
 }
+
+
+//for socket.io
+
+module.exports = "testing one two three";

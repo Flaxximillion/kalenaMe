@@ -1,0 +1,81 @@
+
+<div class="chatroomContainer">
+  <div class="row" id="messageArea">
+    <div class="col-md-4">
+      <div class="well">
+        <h3>Online Users</h3>
+        <ul class="list-group" id="users"></ul>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="chat" id="chat">
+        <form id="messageForm">
+          <div class="form-group">
+            <label>Enter Message</label>
+            <textarea class="form-control" id="message"></textarea><br>
+            <input type="submit" class="btn btn-primary" value="Send Message">
+          </div>
+        </form>
+      </div>
+    </div>
+    <button id="logoff"></button>
+  </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
+<script type="text/javascript">
+
+
+
+
+function startChat(){
+
+  var socket = io.connect();
+  //socket = io();
+  var messageForm = $('#messageForm');
+  var message = $('#message');
+  var chat = $('#chat');
+  var users = $('#users');
+
+  messageForm.submit(function(e){
+    e.preventDefault();
+    socket.emit('send message', message.val());
+    message.val('');
+  });
+
+  socket.on('new message', function(data){
+    chat.append('<div class="well"><strong>'+ data.user +': </strong>'+ data.msg + '</div>');
+  });
+
+  socket.on('get users', function(data){
+    var html = ''
+    for (var i = 0; i < data.length; i++){
+      html += '<li class="list-group-item">'+ data[i] +'</li>'
+    }
+    users.html(html);
+  })
+}
+
+function login(){
+  socket.on('loggedin', true);
+}
+
+
+
+
+$(document).ready(function() {
+  console.log( "ready!" );
+  startChat();
+  //socket.emit('new user', 'fetch group members');
+  login();
+
+  $("#logoff").on("click", function(){
+    $.get("/messages/logoff", function(response){
+      console.log("logged off");
+    });
+  });
+});
+
+</script>

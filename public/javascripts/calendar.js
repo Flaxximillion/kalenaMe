@@ -188,4 +188,10 @@ $(document).ready(function() {
   $("#addtask").on("click", document, function() {
     addNewTask();
   });
+
+  $("#gotomessages").on("click", function(){
+    $.get("/calendar/api/" + calendarID, function(response){
+      console.log("heading over to messages");
+    });
+  });
 });

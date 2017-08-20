@@ -1,33 +1,13 @@
 module.exports = function (sequelize, DataTypes) {
     var Message = sequelize.define("messages", {
-      messageID: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        validate: {
-          notNull: true,
-          notEmpty: true
-        }
+      userUUID: {
+        type: DataTypes.STRING
+      },
+      firstName: {
+        type: DataTypes.STRING
       },
       messageCalendar: {
-        type: DataTypes.STRING,
-        validate: {
-          notNull: true,
-          notEmpty: true
-        }
-      },
-      messageSender: {
         type: DataTypes.STRING
-      },
-      messageReceiver: {
-        type: DataTypes.STRING
-      },
-      messageBody: {
-        type: DataTypes.TEXT,
-        validate: {
-            notNull: true,
-            notEmpty: true
-        }
       }
   });
 
