@@ -187,6 +187,14 @@ $(document).ready(function () {
         closeModal();
     });
 
+
+
+    $("#gotomessages").on("click", function(){
+      $.get("/calendar/api/" + calendarID, function(response){
+        console.log("heading over to messages");
+      });
+    });
+
     $(document).on("click", "button.claim", function (elem) {
         var taskID = $(elem.target).data("id");
         // console.log("taskID: "+taskID);
@@ -204,4 +212,5 @@ $(document).ready(function () {
     $("#addtask").on("click", document, function () {
         addNewTask();
     });
+
 });
