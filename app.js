@@ -22,7 +22,6 @@ var UserDB = passportLocalSequelize.defineUser(models.sequelize, {
 
 
 var index = require('./routes/index');
-var userRoute = require('./routes/userRoute');
 var calendarRoute = require('./routes/calendarRoute');
 var messageRoute = require('./routes/messageRoute');
 var taskRoute = require('./routes/taskRoute');
@@ -123,12 +122,11 @@ app.post('/create', function (req, res) {
 
 app.get('/logout', function (req, res) {
     req.session.destroy();
-    res.send('loggedout');
+    res.redirect('/');
 });
 
 app.use('/', index);
 app.use('/calendar', calendarRoute);
-app.use('/user', userRoute);
 app.use('/task', taskRoute);
 app.use('/message', messageRoute);
 

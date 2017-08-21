@@ -52,6 +52,16 @@ router.post('/', function (req, res, next) {
     })
 });
 
+router.post('/invite/:calendarID', function(req, res){
+    models.calendarUser.create({
+        calendarUserEmail: req.body.email,
+        calendarID: req.body.calendarID
+    }).then(function(invite){
+        console.log(invite);
+        res.send('addedInvite');
+    })
+});
+
 router.get('/', function (req, res, next) {
     var cal = [];
     var uncal = [];
@@ -160,19 +170,13 @@ router.get('/join/:calendarID', function (req, res, next) {
                 raw: true
             }).then(function (users) {
                 console.log(users);
+                res.render("calendar.hbs", {
+                    layout: "calendar.hbs",
+                    meminfo: users,
+                    calinfo: result
+                });
             })
         });
-    });
-});
-
-router.get('/test', function (req, res) {
-    console.log("\n USERS:");
-    console.log(users);
-
-    res.render("calendar.hbs", {
-        layout: "calendar.hbs",
-        meminfo: users,
-        calinfo: result
     });
 });
 
