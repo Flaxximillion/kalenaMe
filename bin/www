@@ -9,11 +9,6 @@ var debug = require('debug')('express-sequelize');
 var http = require('http');
 var models = require('../models');
 
-var uuid = require('uuid/v4');
-
-var session = require('express-session');
-var SequelizeStore = require('connect-session-sequelize')(session.Store);
-
 /**
  * Get port from environment and store in Express.
  */
@@ -32,11 +27,30 @@ models.sequelize.sync({
      * Listen on provided port, on all network interfaces.
      */
 
-    models.sequelize.models.User.hasMany(models.calendarUser, {
-        foreignKey: {
-            name: 'calendarUserUUID'
-        }
+    models.sequelize.models.User.hasMany(models.tasks, {
+        foreignKey: 'taskRequester',
+        as: 'userRequester'
     });
+
+    models.sequelize.models.User.hasMany(models.tasks, {
+        foreignKey: 'taskAccepter',
+        as: 'userAccepter'
+    });
+
+    models.sequelize.sync();
+
+    models.tasks.belongsTo(models.sequelize.models.User, {
+        targetKey: 'uuid',
+        foreignKey: 'taskAccepter',
+        as: 'userAccepter'
+    });
+
+    models.tasks.belongsTo(models.sequelize.models.User, {
+        targetKey: 'uuid',
+        foreignKey: 'taskRequester',
+        as: 'userRequester'
+    });
+
 
     models.calendarUser.belongsTo(models.sequelize.models.User, {
         foreignKey: {
@@ -52,11 +66,19 @@ models.sequelize.sync({
         as: 'calendars'
     });
 
+    models.sequelize.models.User.hasMany(models.calendarUser, {
+        foreignKey: {
+            name: 'calendarUserUUID'
+        }
+    });
+
     models.calendar.hasMany(models.calendarUser, {
         foreignKey: {
             name: 'calendarID'
         }
     });
+
+    models.sequelize.sync();
 
     server.listen(port, function() {
         console.log("server up");
@@ -128,3 +150,8 @@ function onListening() {
         : 'port ' + addr.port;
     debug('Listening on ' + bind);
 }
+
+
+//for socket.io
+
+module.exports = "testing one two three";

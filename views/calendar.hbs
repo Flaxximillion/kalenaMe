@@ -1,164 +1,166 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>CALENDAR NAME: {{calinfo.calendarName}}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CALENDAR NAME: {{calinfo.calendarName}}</title>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
-  <link rel="stylesheet" href="/stylesheets/style.css" >
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto:100|Saira+Extra+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto:100|Saira+Extra+Condensed" rel="stylesheet">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" />
-  <link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
 
-  <style>
+    <style>
 
-  body {
-    padding: 0;
-  }
+        body {
+            padding: 0;
+        }
 
-  .fc-view-container {
-    background-color: #efefef;
-  }
+        .fc-view-container {
+            background-color: #efefef;
+        }
 
-    #calendar {
-      float: right;
-      width: 75%;
-    }
+        #calendar {
+            float: right;
+            width: 75%;
+        }
 
-    #sidebar {
-      width: 25%;
-      background-color: #efefef;
-      height: 100%;
-      position: fixed!important;
-      z-index: 1;
-      overflow: auto
-    }
+        #sidebar {
+            width: 25%;
+            background-color: #efefef;
+            height: 100%;
+            position: fixed !important;
+            z-index: 1;
+            overflow: auto
+        }
 
-    #sidebarToggle {
-      cursor: pointer;
-      position: absolute;
-      padding: 0;
-      margin: 0;
-      right: 0;
-      top: 50%;
-      z-index: 100;
-      -webkit-transform: rotate(-90deg);
-      -moz-transform: rotate(-90deg);
-      -o-transform: rotate(-90deg);
-      -ms-transform: rotate(-90deg);
-      transform: rotate(-90deg);
-    }
+        #sidebarToggle {
+            cursor: pointer;
+            position: absolute;
+            padding: 0;
+            margin: 0;
+            right: 0;
+            top: 50%;
+            z-index: 100;
+            -webkit-transform: rotate(-90deg);
+            -moz-transform: rotate(-90deg);
+            -o-transform: rotate(-90deg);
+            -ms-transform: rotate(-90deg);
+            transform: rotate(-90deg);
+        }
 
-    #taskDetails {
-      display: none;
-    }
+        #taskDetails {
+            display: none;
+        }
 
-    .modalContainer {
-      background-color: #fefefe;
-      margin: 15% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 40%;
-    }
+        .modalContainer {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 40%;
+        }
 
-    .modal {
-      position: fixed;
-      /* Stay in place */
-      z-index: 1;
-      /* Sit on top */
-      left: 0;
-      top: 0;
-      width: 100%;
-      /* Full width */
-      height: 100%;
-      /* Full height */
-      overflow: auto;
-      /* Enable scroll if needed */
-      background-color: rgb(0, 0, 0);
-      /* Fallback color */
-      background-color: rgba(0, 0, 0, 0.4);
-      /* Black w/ opacity */
-    }
+        .modal {
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+        }
 
-    .modal .close {
-      cursor: pointer;
-      font-size: 2em;
-      float: right;
-    }
+        .modal .close {
+            cursor: pointer;
+            font-size: 2em;
+            float: right;
+        }
 
-    .modalContent {
-      width: 90%;
-    }
+        .modalContent {
+            width: 90%;
+        }
 
+        .task {
+            cursor: pointer;
+        }
 
-    .task {
-      cursor: pointer;
-    }
+        a.claimed {
+            background-color: green;
+            border-color: green;
+        }
 
-    a.claimed {
-      background-color: green;
-      border-color: green;
-    }
+        a.unclaimed {
+            background-color: red;
+            border-color: red;
+        }
 
-    a.unclaimed {
-      background-color: red;
-      border-color: red;
-    }
-
-  </style>
+    </style>
 
 </head>
 
-<body>
+<body id={{calinfo.calendarId}}>
 
-  <div class="sidebar bar-block" id="sidebar">
+<div class="sidebar bar-block" id="sidebar">
     <div id="sidebarToggle">hide</div>
     <!-- <button id="close"> &times;</button> -->
     <h3>Members</h3>
     <ul>
-      {{#each meminfo}}
-        {{#if @first}}
-          <li><a href="#">{{this.firstName}}</a><span class="admin"> (admin)</span></li>
-        {{else}}
-          <li><a href="#">{{this.firstName}}</a></li>
-        {{/if}}
-      {{/each}}
+        {{#each meminfo}}
+            {{#if @first}}
+                <li><a href="#">{{this.firstName}}</a><span class="admin"> (admin)</span></li>
+            {{else}}
+                <li><a href="#">{{this.firstName}}</a></li>
+            {{/if}}
+        {{/each}}
     </ul>
 
     <button id="addtask">Add task</button>
 
+    <button id="gotomessages"></button>
    </div>
+   <div>
+    <button id="inviteUser" class="invite">Invite User</button>
+    <input type="text" id="inviteEmail" class="invite" style="display: none">
+    <button id="sendInvite" class="invite" style="display: none;">Send Invite</button>
 
-  <div id="calendar"></div>
+</div>
 
-  <!-- Modals -->
-  <div id="taskDetails" class="modal">
+
+<div id="calendar"></div>
+
+<!-- Modals -->
+<div id="taskDetails" class="modal">
     <div class="modalContainer">
-      <div class="close">&times;</div>
-      <div class="modalContent">
-      </div>
-      <div class="claimStatus">
-      </div>
+        <div class="close">&times;</div>
+        <div class="modalContent">
+        </div>
+        <div class="claimStatus">
+        </div>
     </div>
-  </div>
+</div>
 
-  <script type="text/javascript">
-    var calendarID = {{calinfo.id}};
-  </script>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
 
-  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+<script src="https://unpkg.com/flatpickr"></script>
 
-  <script src="https://unpkg.com/flatpickr"></script>
-
-  <script src="/javascripts/calendar.js"></script>
+<script src="/javascripts/calendar.js"></script>
 
 </body>
 
