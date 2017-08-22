@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var app = require('../app').app;
 var debug = require('debug')('express-sequelize');
 var http = require('http');
 var models = require('../models');
@@ -18,7 +18,13 @@ app.set('port', port);
 /**
  * Create HTTP server.
  */
-var server = http.createServer(app);
+// var server = http.createServer(app);
+
+// See https://github.com/onedesign/express-socketio-tutorial
+var server = require('../app').server;
+
+
+
 
 models.sequelize.sync({
     //force: true

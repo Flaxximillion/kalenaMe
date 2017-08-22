@@ -2,22 +2,26 @@
   <h1>Your Calendars</h1>
   <div class="yesCal">
     {{#each cal}}
-        <div class="currentCalendars hvr-bounce-in" id="{{id}}">
-            <h2>{{name}}</h2>
-            <h3>{{this.description}}</h3>
-            <p>Owner: {{this.isOwner}}</p>
-            <!-- <hr> -->
-        </div>
+        <a href="/calendar/join/{{id}}">
+          <div class="currentCalendars hvr-bounce-in" id="{{id}}">
+              <h2>{{name}}</h2>
+              <h3>{{this.description}}</h3>
+              <p>Owner: {{this.isOwner}}</p>
+              <!-- <hr> -->
+          </div>
+        </a>
     {{/each}}
   </div>
 
   <h1>Pending Calendars</h1>
   <div class="pendCal">
     {{#each uncal}}
+      <a href="/calendar/join/{{id}}">
         <div class="pendingCalendars hvr-bounce-in" id="{{id}}">
             <h2>{{name}}</h2>
             <h3>{{description}}</h3>
         </div>
+      </a>
     {{/each}}
   </div>
   <button type="button" name="button" id="addCal"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i></button>
@@ -25,7 +29,9 @@
 
 <div class="newCalendarContainer">
   <h1>New Calendar</h1>
-    <form>
+    <form class="formGrid">
+      <div id="col1">
+        <h2>Calendar Information</h2>
         <div>
             <label for="calendarName">Name of calendar:</label><br>
             <input type="text" name="calendarName" class="form-control" id="calendarName" required>
@@ -36,22 +42,33 @@
             <textarea rows="3" cols="40" name="calendarDescription" class="form-control"
                       id="calendarDescription"></textarea>
         </div>
+      </div>
 
+      <div id="col2">
         <h2>Invite members</h2>
         <div id="userRows">
             <label for="email0">Email</label>
             <input type="email" name="inviteEmail" class="form-control" id="email0" placeholder="email@address.com"
-                   required>
-            <!-- <label class="pwd">Name</label>
-           <input type="name" class="form-control" id="name0" placeholder="Full Name" required> -->
+                   required><br>
+            <label for="email1">Email</label>
+            <input type="email" name="inviteEmail" class="form-control" id="email1" placeholder="email@address.com"
+                    required><br>
+            <label for="email2">Email</label>
+            <input type="email" name="inviteEmail" class="form-control" id="email2" placeholder="email@address.com"
+                    required><br>
+            <label for="email3">Email</label>
+            <input type="email" name="inviteEmail" class="form-control" id="email3" placeholder="email@address.com"
+                    required>
+
         </div>
         <div>
             <button type="button" id="addAnother">+ Add </button>
         </div>
-        <div>
-            <button type="submit" id="gotoCalendar">Go to calendar</button>
-        </div>
+      </div>
     </form>
+    <div>
+        <button type="submit" id="gotoCalendar">Go to calendar</button>
+    </div>
 </div>
 
 

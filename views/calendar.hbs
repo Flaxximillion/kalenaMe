@@ -6,12 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CALENDAR NAME: {{calinfo.calendarName}}</title>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
     <link rel="stylesheet" href="/stylesheets/style.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto:100|Saira+Extra+Condensed" rel="stylesheet">
-
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css"/>
     <link rel="stylesheet" href="https://unpkg.com/flatpickr/dist/flatpickr.min.css">
 
@@ -118,6 +117,7 @@
 <div class="sidebar bar-block" id="sidebar">
     <div id="sidebarToggle">hide</div>
     <!-- <button id="close"> &times;</button> -->
+    <img src="../assets/kalenaLogoAlone.png" alt="logo">
     <h3>Members</h3>
     <ul>
         {{#each meminfo}}
@@ -130,18 +130,19 @@
     </ul>
 
     <button id="addtask">Add task</button>
-
-    <button id="gotomessages"></button>
+    <br>
+    <a href="/messages/api/{{calinfo.calendarId}}"><button><i class="fa fa-comments" aria-hidden="true"></i></button></a>
    </div>
    <div>
-    <button id="inviteUser" class="invite">Invite User</button>
     <input type="text" id="inviteEmail" class="invite" style="display: none">
     <button id="sendInvite" class="invite" style="display: none;">Send Invite</button>
 
 </div>
 
+<div class="calendarContainer">
+  <div id="calendar"></div>
+</div>
 
-<div id="calendar"></div>
 
 <!-- Modals -->
 <div id="taskDetails" class="modal">
@@ -161,6 +162,10 @@
 <script src="https://unpkg.com/flatpickr"></script>
 
 <script src="/javascripts/calendar.js"></script>
+
+<script type="text/javascript">
+
+</script>
 
 </body>
 
