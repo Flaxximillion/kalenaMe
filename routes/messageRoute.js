@@ -82,12 +82,12 @@ io.sockets.on('connection', function(socket){
   function grabUsers(){
     models.messages.findAll({
       where: {
-        messageCalendar: calendarID;
+        messageCalendar: calendarID
       }
     })
     .then(function(result){
       socket.emit('get users', result);
-    }).
+    });
   }
 
   socket.on('loggedin', function(data){

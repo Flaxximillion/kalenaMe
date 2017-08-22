@@ -1,5 +1,11 @@
 /*Global styling
 ================================================================================*/
+a {
+  color: inherit;
+  cursor: auto;
+  text-decoration: none;
+}
+
 p {
     display: block;
     -webkit-margin-before: 0;
@@ -159,6 +165,13 @@ textarea {
   font-size: 3.6em;
 }
 
+.signUpForm h1 {
+  margin: 10px 0;
+  font-family: "Saira Extra Condensed";
+  font-weight: 800;
+  font-size: 3.6em;
+}
+
 .signUpForm {
   margin: 0 auto;
   position: relative;
@@ -219,7 +232,7 @@ textarea {
   margin: 20px;
   padding: 20px;
   position: relative;
-  width: 30%;
+  min-width: 190px;
   background-color: #cccccc;
   height: 100px;
   color: white;
@@ -235,14 +248,12 @@ textarea {
   margin: 20px;
   padding: 20px;
   position: relative;
-  width: 30%;
+  min-width: 190px;
   background-color: #cccccc;
-  height: 30px;
+  height: 50px;
   color: white;
   transition: 0.5s;
   cursor:pointer;
-  display: flex;
-  flex-flow: row;
 }
 
 .currentCalendars:hover {
@@ -256,16 +267,21 @@ textarea {
 .yesCal, .pendCal {
   display: flex;
   flex-direction: row;
+  max-width: 900px;
+  overflow-x: scroll;
+    overflow-y: hidden;
 }
 
 .usersCalendarsContainer h1 {
+  text-transform: uppercase;
   font-weight: 300;
   display: flex;
   justify-content: center;
 }
 
-.usersCalendarsContainer h1,h2 {
+.usersCalendarsContainer h2 {
   text-transform: uppercase;
+  margin: 0 auto;
 }
 
 .hvr-bounce-in {
@@ -295,7 +311,7 @@ textarea {
   margin: 0 auto;
   padding: 20px;
   position: relative;
-  height: 500px;
+  height: auto;
   width: 900px;
   background-color: white;
   align-items: center;
@@ -311,18 +327,38 @@ textarea {
 }
 
 .newCalendarContainer h2 {
+  margin: 0 0 30px 0;
   font-weight: 200;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  color: #FA6E59;
 }
 
 .newCalendarContainer h1,h2 {
   text-transform: uppercase;
 }
 
+.formGrid{
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-rows: 25% 25% 25% 25%;
+}
+
+#col1{
+  grid-area: 1/1/5/3;
+}
+
+#col2{
+  grid-area: 1/3/5/5;
+}
+
 #addAnother {
-  margin: 20px 20px 20px 0px;
+  margin: auto;
+  margin-top: 20px;
+  margin-right: 65px;
   font-size: 12px;
+  display: flex;
+
 }
 
 #gotoCalendar {
@@ -330,5 +366,120 @@ textarea {
   position: relative;
   display: flex;
   justify-content: center;
-  margin: 0 auto;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
+
+
+
+
+/* Main Calendar styling
+================================================================================*/
+
+.calendarContainer{
+  margin: 0 auto;
+  margin-top: 20px;
+  width: 80%;
+  height: auto;
+}
+
+.calendarContainer button {
+  margin: 0 auto;
+  margin-left: 3px;
+}
+
+td {
+  background: none;
+  font-family: "Roboto";
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.fc-left h2 {
+  font-family: "Roboto";
+  font-weight: 100;
+  font-size: 3.5em;
+}
+
+.fc-center div {
+  margin-top: 10px;
+}
+
+.fc-right div {
+  margin-top: 10px;
+}
+
+.fc-right > button .fc-today-button {
+  margin-top: 10px;
+}
+
+th {
+  padding: 20px;
+  background-color: #FA6E59;
+  font-family: "Roboto";
+  font-weight: 100;
+  font-size: 2em;
+}
+
+
+/* Sidebar styling
+================================================================================*/
+
+
+#sidebar {
+  background-color: #4897D8 !important;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  display: flex;
+  flex-flow: column;
+}
+
+#sidebar h3 {
+  margin: 0 auto;
+  font-size: 2.5em;
+  font-weight: 400;
+  color: white;
+  text-transform: uppercase;
+}
+
+#sidebar ul {
+  font-size: 1.2em;
+  font-weight: 100;
+  color: white;
+}
+
+#sidebar button {
+  margin: 5px;
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border: none;
+  border-radius: 28px;
+  font-family: "Roboto";
+  font-weight: 100;
+  color: #ffffff;
+  font-size: 18px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  background-color: #FA6E59;
+  text-transform: uppercase;
+  transition: 0.5s;
+  cursor:pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*.*/

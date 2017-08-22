@@ -94,6 +94,11 @@ function fetchTasks() {
                 // CALLBACK EVENTS
                 // After calendar is rendered, before other events are triggered
                 viewRender: function () {
+                  $(document).ready(function() {
+                    $( "button" ).removeClass( "fc-button fc-state-default");
+                    $( "button" ).removeClass( "fc-button fc-state-default");
+
+                  });
                     console.log("Calendar rendered");
                 },
                 // When an event is clicked
