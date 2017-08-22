@@ -3,11 +3,14 @@ module.exports = function (sequelize, DataTypes) {
       userUUID: {
         type: DataTypes.STRING
       },
-      firstName: {
+      userName: {
         type: DataTypes.STRING
       },
       messageCalendar: {
         type: DataTypes.STRING
+      },
+      messageText: {
+        type: DataTypes.TEXT
       }
   });
 

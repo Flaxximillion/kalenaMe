@@ -1,3 +1,4 @@
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -11,6 +12,7 @@ var SequelizeStore = require('connect-session-sequelize')(session.Store);
 var passportLocalSequelize = require('passport-local-sequelize');
 var uuid = require('uuid/v4');
 
+
 var UserDB = passportLocalSequelize.defineUser(models.sequelize, {
     firstName: models.Sequelize.STRING,
     lastName: models.Sequelize.STRING,
@@ -21,12 +23,17 @@ var UserDB = passportLocalSequelize.defineUser(models.sequelize, {
 });
 
 
+var app = express();
+// Socket.io
+// https://github.com/onedesign/express-socketio-tutorial
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
 var index = require('./routes/index');
 var calendarRoute = require('./routes/calendarRoute');
 var messageRoute = require('./routes/messageRoute');
 var taskRoute = require('./routes/taskRoute');
 
-var app = express();
 
 var Session = models.sequelize.define('Sessions', {
     sid: {
@@ -59,7 +66,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, 'node_modules/socket.io-client/dist')));
+// app.use(express.static(path.join(__dirname, 'node_modules/socket.io-client/dist')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     secret: 'super secret session key please do not do a leak',
@@ -125,13 +132,22 @@ app.get('/logout', function (req, res) {
     res.redirect('/');
 });
 
+// Socket.io
+// See https://github.com/onedesign/express-socketio-tutorial
+app.use(function(req, res, next){
+  res.io = io;
+  next();
+});
+
 app.use('/', index);
 app.use('/calendar', calendarRoute);
 app.use('/task', taskRoute);
-app.use('/message', messageRoute);
+app.use('/messages', messageRoute);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -151,4 +167,4 @@ app.use(function (err, req, res, next) {
     res.render('error.hbs');
 });
 
-module.exports = app;
+module.exports = {app: app, server: server};

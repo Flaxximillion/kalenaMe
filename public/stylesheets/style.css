@@ -470,6 +470,121 @@ th {
 }
 
 
+/* ChatRoom Styling
+================================================================================*/
+
+.chatroomContainer {
+  margin: 0 auto;
+  position: relative;
+  max-height: 500px;
+  max-width: 900px;
+  background-color: #E5E5E5;
+}
+
+.chatroomContainer h3 {
+  margin: 0;
+  padding: 20px;
+  font-size: 2.5em;
+  font-weight: 100;
+  color: black;
+  background-color: whitesmoke;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
+
+
+#messageForm {
+  padding: 0;
+  position: relative;
+  grid-area: 4/1/5/5;
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+}
+
+.form-group {
+  padding: 0;
+  position: relative;
+  grid-area: 4/1/5/5;
+  background-color: white;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+}
+
+.form-group{
+    border:0;padding:10px;background:whitesmoke;
+}
+
+.form-control{
+  margin: 0 auto;
+}
+
+#message {
+  width: 600px;
+  background: whitesmoke;
+  border: none;
+}
+
+.sendMessage {
+  margin: 10px;
+  height: auto;
+  width: fit-content;
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border: none;
+  border-radius: 28px;
+  font-family: "FontAwesome";
+  font-weight: 100;
+  color: #ffffff;
+  font-size: 13px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  background-color: #4897D8;
+  transition: 0.5s;
+  cursor:pointer;
+}
+
+input[type="submit"] {
+    font-family: FontAwesome;
+}
+
+#transcript {
+  height: 400px;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  overflow: scroll;
+
+}
+
+#transcript p {
+  margin: 10px;
+  height: auto;
+  width: fit-content;
+  max-width: 500px;
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border: none;
+  border-radius: 28px;
+  font-family: "Roboto";
+  font-weight: 100;
+  color: #ffffff;
+  font-size: 13px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  background-color: #4897D8;
+  transition: 0.5s;
+  cursor:pointer;
+}
 
 
 
