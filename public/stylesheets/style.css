@@ -553,6 +553,25 @@ th {
   cursor:pointer;
 }
 
+.backToCalendar {
+  margin: 10px;
+  height: auto;
+  width: fit-content;
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border: none;
+  border-radius: 28px;
+  font-family: "FontAwesome";
+  font-weight: 100;
+  color: #ffffff;
+  font-size: 13px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  background-color: #4897D8;
+  transition: 0.5s;
+  cursor:pointer;
+}
+
 input[type="submit"] {
     font-family: FontAwesome;
 }
