@@ -572,7 +572,7 @@ th {
   cursor:pointer;
 }
 
-input[type="submit"] {
+.chatroomContainer input[type="submit"] {
     font-family: FontAwesome;
 }
 
