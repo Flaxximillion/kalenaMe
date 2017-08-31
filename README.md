@@ -1,4 +1,4 @@
-![Logo](/public/assets/kalenaLogo.png)
+![Logo](/public/assets/kalenaLogoReadme.png)
 
 # Introducing Kalena
 
